@@ -1,0 +1,8 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$doman-app-primary: mat-palette($mat-light-green, 800);
+$doman-app-accent:  mat-palette($mat-pink, 500, 900, A100);
+$doman-app-warn:    mat-palette($mat-deep-orange);
+$doman-app-theme: mat-light-theme($doman-app-primary, $doman-app-accent, $doman-app-warn);
+@include angular-material-theme($doman-app-theme);
