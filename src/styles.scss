@@ -1,6 +1,7 @@
 @import "./assets/styles/theme";
+@import "./assets/styles/colors";
 
-$primary: #689F38;
+$primary: $doman-primary;
 
 @import "~bootstrap/scss/bootstrap";
 
