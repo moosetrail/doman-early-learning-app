@@ -1,26 +1,17 @@
-<header>
-  <nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="#">Doman Early Learing App</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
+<div class="container-fluid h-100">
+  <div class="row h-100 justify-content-center no-margin">
+    <div class="col h-100 d-flex flex-column">
+        <div class="row justify-content-center">
+          <div class="col no-padding">
+            <app-page-navigation></app-page-navigation>
+          </div>
+        </div>
+        <div class="row justify-content-center flex-grow-1 main-area">
+          <router-outlet></router-outlet>
+        </div>
     </div>
-  </nav>
-</header>
+  </div>
+</div>
 
-<router-outlet></router-outlet>
+
+
