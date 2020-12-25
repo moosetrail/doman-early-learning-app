@@ -9,7 +9,8 @@
     "test:watch": "jest --watch",
     "test:cc": "jest --coverage",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "cypress": "npx cypress open"
   },
   "private": true,
   "dependencies": {
@@ -42,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "4.3.0",
     "@typescript-eslint/parser": "4.3.0",
     "codelyzer": "^6.0.0",
+    "cypress": "^6.2.0",
     "eslint": "^7.6.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-jsdoc": "30.7.6",
