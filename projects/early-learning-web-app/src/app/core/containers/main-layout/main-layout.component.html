@@ -1,3 +1,10 @@
-<p>main-layout works!</p>
+<div class="container">
+  <header class="p-grid">
+    <div class="p-col-fixed logo">Doman Early Learning</div>
 
-<router-outlet></router-outlet>
+    <p-menubar [model]="items" class="p-col"> </p-menubar>
+  </header>
+
+  <p>Här kommer innehåll</p>
+  <router-outlet></router-outlet>
+</div>

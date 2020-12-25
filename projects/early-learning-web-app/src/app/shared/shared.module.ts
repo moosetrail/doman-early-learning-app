@@ -1,17 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [],
   imports: [
     // VENDOR
-    CommonModule
+    CommonModule,
+    BrowserAnimationsModule
 
     // LOCAL
   ],
   exports: [
     // VENDOR
-    CommonModule
+    CommonModule,
+    BrowserAnimationsModule
 
     // LOCAL
   ]
