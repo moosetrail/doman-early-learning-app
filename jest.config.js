@@ -12,5 +12,6 @@ module.exports = {
         ]
       }
     }
-  }
+  },
+  testPathIgnorePatterns: ["/node_modules/", "<rootDir>/projects/early-learning-web-app/e2e"]
 }
