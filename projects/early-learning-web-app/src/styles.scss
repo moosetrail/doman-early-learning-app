@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+
+.p-menubar {
+  background:none;
+  border:none;
+}
+
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled) .p-menuitem-text,
+.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled) .p-submenu-icon {
+  color: #7bc708;
+}
