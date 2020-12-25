@@ -11,6 +11,9 @@
         },
         "@schematics/angular:application": {
           "strict": true
+        },
+        "@ngneat/spectator:spectator-component": {
+          "style": "scss"
         }
       },
       "root": "projects/early-learning-web-app",
@@ -127,7 +130,8 @@
     }
   },
   "cli": {
-    "analytics": "b4626127-825a-481f-80d7-b616050d3025"
+    "analytics": "b4626127-825a-481f-80d7-b616050d3025",
+    "defaultCollection": "@ngneat/spectator"
   },
   "defaultProject": "EarlyLearningWebApp"
 }
