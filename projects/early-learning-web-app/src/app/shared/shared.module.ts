@@ -6,9 +6,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { ListItemsPipe } from './pipes/list-items.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [ListItemsPipe],
   imports: [
     // VENDOR
     CommonModule,
@@ -29,11 +31,13 @@ import {MatListModule} from '@angular/material/list';
     FlexLayoutModule,
 
     // MATERIAL
+    MatCardModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
 
     // LOCAL
+    ListItemsPipe
   ]
 })
 export class SharedModule { }
