@@ -22,18 +22,8 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <mat-card class="programChecklist">
-        <mat-card-title
-          >Reading program for Zach, Jackie and Nick</mat-card-title
-        >
-        <mat-card-content>Här kommer checklistan</mat-card-content>
-      </mat-card>
-
-      <mat-card class="programChecklist">
-        <mat-card-title>Reading program for Phoenix</mat-card-title>
-        <mat-card-content>
-        </mat-card-content>
-      </mat-card>
+      <app-reading-checklist [children]="['Zach', 'Jackie', 'Nick']" class="programChecklist"></app-reading-checklist>
+      <app-reading-checklist [children]="['Phoenix']" class="programChecklist"></app-reading-checklist>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

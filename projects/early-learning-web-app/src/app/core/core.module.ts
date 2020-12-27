@@ -6,6 +6,7 @@ import { MainLayoutComponent } from './containers/main-layout/main-layout.compon
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import { ReadingProgramModule } from '../features/reading-program/reading-program.module';
 
 @NgModule({
   declarations: [MainLayoutComponent],
@@ -15,12 +16,12 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     RouterModule,
 
     // MATERIAL
-    MatCardModule,
     MatToolbarModule,
     MatSidenavModule,
 
     // LOCAL
-    SharedModule
+    SharedModule,
+    ReadingProgramModule
   ],
   exports: [MainLayoutComponent]
 })
