@@ -1,0 +1,6 @@
+<ng-container *ngIf="showCheckboxes; else textSessions"
+><mat-checkbox *ngFor="let session of sessions"></mat-checkbox
+></ng-container>
+<ng-template #textSessions>
+0 of 3
+</ng-template>

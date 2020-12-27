@@ -9,9 +9,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { ListItemsPipe } from './pipes/list-items.pipe';
+import { ChecklistItemComponent } from './components/checklist-item/checklist-item.component';
 
 @NgModule({
-  declarations: [ListItemsPipe],
+  declarations: [ListItemsPipe, ChecklistItemComponent],
   imports: [
     // VENDOR
     CommonModule,
@@ -40,7 +41,8 @@ import { ListItemsPipe } from './pipes/list-items.pipe';
     MatListModule,
 
     // LOCAL
-    ListItemsPipe
+    ListItemsPipe,
+    ChecklistItemComponent
   ]
 })
 export class SharedModule { }
