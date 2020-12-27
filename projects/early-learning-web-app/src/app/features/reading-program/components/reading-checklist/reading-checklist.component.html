@@ -1,4 +1,26 @@
 <mat-card class="programChecklist">
-  <mat-card-title>Reading program for {{children | listItems}}</mat-card-title>
-  <mat-card-content>Här kommer checklistan</mat-card-content>
+  <mat-card-title
+    >Reading program for {{ children | listItems }}</mat-card-title
+  >
+  <mat-card-content>
+    <table style="width: 100%">
+      <tr>
+        <th></th>
+        <ng-container *ngIf="children.length > 1">
+          <th *ngFor="let name of children">{{ name }}</th>
+        </ng-container>
+      </tr>
+      <tr *ngFor="let unit of readingUnits" class="spaced">
+        <td class="no-stretch">{{ unit.name }}</td>
+        <td *ngFor="let child of children" [ngClass]="{'center': children.length > 1}">
+          <ng-container *ngIf="displayCheckboxes; else textSessions"
+            ><mat-checkbox *ngFor="let session of unit.sessions"></mat-checkbox
+          ></ng-container>
+          <ng-template #textSessions>
+            0 of 3
+          </ng-template>
+        </td>
+      </tr>
+    </table>
+  </mat-card-content>
 </mat-card>
