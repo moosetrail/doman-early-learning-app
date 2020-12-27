@@ -1,12 +1,29 @@
-<div class="container">
-  <header>
-
-  </header>
-
-  <mat-toolbar>
+<div fxLayout="column" class="container">
+  <mat-toolbar fxFlex="nogrow">
     <div class="logo">Doman Early Learning</div>
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
   </mat-toolbar>
 
-  <p>Här kommer innehåll</p>
-  <router-outlet></router-outlet>
+
+  <mat-sidenav-container fxFlex>
+    <mat-sidenav
+      #snav
+      [mode]="isMobile ? 'over' : 'side'"
+      [position]="'end'"
+      [fixedInViewport]="isMobile"
+      fixedTopGap="56"
+    >
+      <mat-nav-list>
+        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{
+          nav
+        }}</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <p>Här kommer innehållet</p>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

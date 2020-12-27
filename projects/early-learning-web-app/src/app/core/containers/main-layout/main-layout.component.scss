@@ -1,11 +1,21 @@
+@import '~@angular/flex-layout/mq';
+
 .logo {
   align-self: center;
   font-size: 2em;
   font-variant: small-caps;
   margin-right: 3em;
+
+  @include layout-bp(lt-md) {
+    font-size: 1em;
+  }
 }
 
 mat-toolbar {
   background: white;
   color: #7bc708;
+
+  button {
+    margin-left: auto;
+  }
 }
