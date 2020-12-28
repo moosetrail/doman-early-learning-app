@@ -28,3 +28,9 @@ mat-sidenav-content {
   margin-top: 1em;
   display: block;
 }
+
+mat-list-item {
+  .heading {
+    font-weight: bold;
+  }
+}

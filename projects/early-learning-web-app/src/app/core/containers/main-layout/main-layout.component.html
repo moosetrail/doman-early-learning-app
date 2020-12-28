@@ -15,9 +15,10 @@
       fixedTopGap="56"
     >
       <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{
-          nav
-        }}</a>
+        <mat-list-item class="heading"> Reading program</mat-list-item>
+        <a mat-list-item [routerLink]="['reading-program', 'plan', 'single-words']">Plan single words</a>
+        <a mat-list-item>Plan sentences</a>
+        <a mat-list-item>Plan homemade books</a>
       </mat-nav-list>
     </mat-sidenav>
 
