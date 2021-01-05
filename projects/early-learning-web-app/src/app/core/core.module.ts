@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +13,7 @@ import { ReadingProgramModule } from '../features/reading-program/reading-progra
   imports: [
     // VENDOR
     BrowserModule,
+    BrowserAnimationsModule,
     RouterModule,
 
     // MATERIAL

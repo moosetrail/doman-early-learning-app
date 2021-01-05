@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {MatButtonModule} from '@angular/material/button';
@@ -16,7 +15,6 @@ import { ChecklistItemComponent } from './components/checklist-item/checklist-it
   imports: [
     // VENDOR
     CommonModule,
-    BrowserAnimationsModule,
     FlexLayoutModule,
 
     // MATERIAL
@@ -30,7 +28,6 @@ import { ChecklistItemComponent } from './components/checklist-item/checklist-it
   exports: [
     // VENDOR
     CommonModule,
-    BrowserAnimationsModule,
     FlexLayoutModule,
 
     // MATERIAL

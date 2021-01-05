@@ -8,7 +8,6 @@ import { MediaObserver } from '@angular/flex-layout';
 })
 export class MainLayoutComponent implements OnInit, OnDestroy {
   isMobile: boolean;
-  fillerNav = Array.from({length: 10}, (_, i) => `Nav Item ${i + 1}`);
 
   constructor(private mediaObserver: MediaObserver) {
     this.isMobile = this.isMobile = this.mediaObserver.isActive('lt-md');
