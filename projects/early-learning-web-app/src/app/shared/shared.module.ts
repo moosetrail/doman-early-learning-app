@@ -11,9 +11,11 @@ import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
 import { ListItemsPipe } from './pipes/list-items.pipe';
 import { ChecklistItemComponent } from './components/checklist-item/checklist-item.component';
+import { ListChildrenPipe } from './pipes/list-children.pipe';
 
 @NgModule({
-  declarations: [ListItemsPipe, ChecklistItemComponent],
+  declarations: [ListItemsPipe, ChecklistItemComponent, ListChildrenPipe],
+  providers: [ListItemsPipe],
   imports: [
     // VENDOR
     CommonModule,
@@ -44,8 +46,10 @@ import { ChecklistItemComponent } from './components/checklist-item/checklist-it
     MatSelectModule,
 
     // LOCAL
+    ListChildrenPipe,
     ListItemsPipe,
-    ChecklistItemComponent
+    ChecklistItemComponent,
+
   ]
 })
 export class SharedModule { }
