@@ -40,9 +40,10 @@
             fxLayoutGap="1em"
           >
             <mat-card fxFlex *ngFor="let c of currentCategories$ | async">
-              <mat-card-title
-                >{{ c.categoryName }}
-                <button
+              <mat-card-title fxLayout="row"  fxLayoutAlign="center center"
+                >
+                <span fxFlex>{{ c.categoryName }}</span>
+                <button fxFlex="nogrow"
                   mat-icon-button
                   [matMenuTriggerFor]="menu"
                   aria-label="Example icon-button with a menu"
