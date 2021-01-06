@@ -9,8 +9,11 @@ export class ListChildrenPipe implements PipeTransform {
 
   constructor(@Inject(ListItemsPipe) private listPipe: ListItemsPipe){}
 
-  transform(children: Child[]): string {
+  transform(children: Child[] | undefined | null): string {
+    if(children === undefined || children === null){
+      return '';
+    }
+
     return this.listPipe.transform(children.map(child => child.name));
   }
-
 }

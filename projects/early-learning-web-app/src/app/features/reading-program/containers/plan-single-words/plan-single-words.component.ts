@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReadingProgram } from '../../models/interfaces/reading-program';
 import { ReadingProgramService } from '../../services/reading-program.service';
-import { tap } from 'rxjs/operators';
 import { MatSelectChange } from '@angular/material/select';
+import { ReadingCategory } from '../../models/interfaces/reading-category';
+import { ReadingWord } from '../../models/interfaces/reading-word';
 
 @Component({
   selector: 'app-plan-single-words',
@@ -13,22 +14,18 @@ import { MatSelectChange } from '@angular/material/select';
 export class PlanSingleWordsComponent implements OnInit {
 
   public programs$!: Observable<ReadingProgram[]>;
-  public currentProgram!: ReadingProgram;
+  public currentProgram$!: Observable<ReadingProgram | null>;
+  public currentCategories$: Observable<ReadingCategory<ReadingWord>[]> | null = null;
 
   constructor(private programService: ReadingProgramService) { }
 
   ngOnInit(): void {
-    this.programs$ = this.programService.getAllReadingPrograms().pipe((
-      tap((programs) => {
-        if(programs.length === 1) {
-          this.currentProgram = programs[0];
-        }
-      })
-    ));
+    this.programs$ = this.programService.getAllReadingPrograms();
+    this.currentProgram$ = this.programService.getCurrentProgram();
+    this.currentCategories$ = this.programService.getCurrentWordCategories();
   }
 
   public selectProgram(change: MatSelectChange): void {
-    this.currentProgram = change.value;
+    this.programService.setCurrentReadingProgram(change.value);
   }
-
 }
