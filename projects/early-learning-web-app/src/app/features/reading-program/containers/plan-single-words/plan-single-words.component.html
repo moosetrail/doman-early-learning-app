@@ -39,47 +39,31 @@
             fxLayout="row"
             fxLayoutGap="1em"
           >
-            <mat-card fxFlex *ngFor="let c of currentCategories$ | async">
-              <mat-card-title fxLayout="row"  fxLayoutAlign="center center"
-                >
-                <span fxFlex>{{ c.categoryName }}</span>
-                <button fxFlex="nogrow"
-                  mat-icon-button
-                  [matMenuTriggerFor]="menu"
-                  aria-label="Example icon-button with a menu"
-                >
-                  <mat-icon>more_vert</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                  <button mat-menu-item>
-                    <mat-icon>assignment_turned_in</mat-icon>
-                    <span>Move to completed</span>
-                  </button>
-                  <button mat-menu-item disabled>
-                    <mat-icon>calendar_today</mat-icon>
-                    <span>Move to planned</span>
-                  </button>
-                  <button mat-menu-item>
-                    <mat-icon>clear</mat-icon>
-                    <span>Remove from plan</span>
-                  </button>
-                  <button mat-menu-item>
-                    <mat-icon>insights</mat-icon>
-                    <span>View statistics</span>
-                  </button>
-                  <button mat-menu-item>
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit category</span>
-                  </button>
-                </mat-menu></mat-card-title
-              >
-              <mat-card-content>
-<ul><li *ngFor="let word of c.cards">{{word.textOnCard}}</li></ul>
-              </mat-card-content>
-            </mat-card>
+            <app-reading-category
+              fxFlex
+              *ngFor="let c of currentCategories$ | async"
+              [category]="c"
+            >
+            </app-reading-category>
           </div>
         </div>
-        <div><h2>Planned categories</h2></div>
+        <div>
+          <h2>Planned categories</h2>
+
+          <div
+            *ngIf="plannedCategories$ != null"
+            fxLayout="row"
+            fxLayoutGap="1em"
+          >
+            <app-reading-category
+              fxFlex
+              *ngFor="let c of plannedCategories$ | async"
+              [category]="c"
+            >
+            </app-reading-category>
+          </div>
+          <button mat-fab><mat-icon>expand_more</mat-icon></button>
+        </div>
       </div>
     </ng-template>
   </div>
