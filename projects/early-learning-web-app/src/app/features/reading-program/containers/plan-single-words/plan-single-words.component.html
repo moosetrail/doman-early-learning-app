@@ -31,7 +31,26 @@
           Plan single words for
           {{ (currentProgram$ | async)?.children | listChildren }}
         </h1>
-        <div><h2>Completed categories</h2></div>
+        <div>
+          <h2>Completed categories</h2>
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <button mat-mini-fab matTooltip="Load more completed categories">
+              <mat-icon>expand_less</mat-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="completedCategories$ != null"
+            fxLayout="row"
+            fxLayoutGap="1em"
+          >
+            <app-reading-category
+              fxFlex
+              *ngFor="let c of completedCategories$ | async"
+              [category]="c"
+            >
+            </app-reading-category>
+          </div>
+        </div>
         <div>
           <h2>Current categories</h2>
           <div
@@ -62,8 +81,22 @@
             >
             </app-reading-category>
           </div>
-          <button mat-fab><mat-icon>expand_more</mat-icon></button>
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <button mat-mini-fab matTooltip="Load more planned categories">
+              <mat-icon>expand_more</mat-icon>
+            </button>
+          </div>
         </div>
+      </div>
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxFlexAlign="end"
+        class="addBtn"
+      >
+        <button mat-fab matTooltip="Add a new word category" color="primary">
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
     </ng-template>
   </div>

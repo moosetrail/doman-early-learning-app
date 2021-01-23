@@ -57,6 +57,11 @@ export class ReadingProgramService {
     return of([...this.testSet1]);
   }
 
+  public getCompletedWordCategories(): Observable<ReadingCategory<ReadingWord>[]> {
+    return of([...this.testSet1]);
+  }
+
+
   private testSet1 = [
     {
       categoryName: 'Pippi Långstrump',

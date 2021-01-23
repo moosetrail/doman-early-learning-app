@@ -17,6 +17,7 @@ export class PlanSingleWordsComponent implements OnInit {
   public currentProgram$!: Observable<ReadingProgram | null>;
   public currentCategories$: Observable<ReadingCategory<ReadingWord>[]> | null = null;
   public plannedCategories$!: Observable<ReadingCategory<ReadingWord>[]>;
+  public completedCategories$!: Observable<ReadingCategory<ReadingWord>[]>;
 
   constructor(private programService: ReadingProgramService) { }
 
@@ -25,6 +26,7 @@ export class PlanSingleWordsComponent implements OnInit {
     this.currentProgram$ = this.programService.getCurrentProgram();
     this.currentCategories$ = this.programService.getCurrentWordCategories();
     this.plannedCategories$ = this.programService.getPlannedWordCategories();
+    this.completedCategories$ = this.programService.getCompletedWordCategories();
   }
 
   public selectProgram(change: MatSelectChange): void {
