@@ -1,4 +1,10 @@
+import { ProgramsService } from './../../services/programs.service';
+import { Observable } from 'rxjs';
+import { Child } from 'projects/early-learning-web-app/src/app/shared/models/interfaces/child';
+import { ChildService } from './../../../../shared/services/child.service';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ProgramType } from 'projects/early-learning-web-app/src/app/shared/models/interfaces/program-type';
 
 @Component({
   selector: 'app-add-program',
@@ -7,7 +13,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddProgramComponent implements OnInit {
 
-  constructor() { }
+  public children$: Observable<Child[]> = this.childService.getAllChildren();
+  public programTypes$: Observable<ProgramType[]> = this.programsService.getAllProgramTypes();
+  public childrenForm = new FormControl();
+  public programForm = new FormControl();
+
+  constructor(private childService: ChildService, private programsService: ProgramsService) { }
 
   ngOnInit(): void {
   }

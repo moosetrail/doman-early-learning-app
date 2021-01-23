@@ -7,6 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
+import {MatInputModule} from '@angular/material/input';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
@@ -14,6 +15,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { ListItemsPipe } from './pipes/list-items.pipe';
 import { ChecklistItemComponent } from './components/checklist-item/checklist-item.component';
 import { ListChildrenPipe } from './pipes/list-children.pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ListItemsPipe, ChecklistItemComponent, ListChildrenPipe],
@@ -21,6 +23,8 @@ import { ListChildrenPipe } from './pipes/list-children.pipe';
   imports: [
     // VENDOR
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
 
     // MATERIAL
@@ -28,6 +32,7 @@ import { ListChildrenPipe } from './pipes/list-children.pipe';
     MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
     MatMenuModule,
     MatSelectModule,
@@ -38,6 +43,8 @@ import { ListChildrenPipe } from './pipes/list-children.pipe';
   exports: [
     // VENDOR
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     FlexLayoutModule,
 
     // MATERIAL
@@ -46,6 +53,7 @@ import { ListChildrenPipe } from './pipes/list-children.pipe';
     MatCheckboxModule,
     MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatListModule,
     MatMenuModule,
     MatSelectModule,
@@ -54,8 +62,7 @@ import { ListChildrenPipe } from './pipes/list-children.pipe';
     // LOCAL
     ListChildrenPipe,
     ListItemsPipe,
-    ChecklistItemComponent,
-
+    ChecklistItemComponent
   ]
 })
 export class SharedModule { }

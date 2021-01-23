@@ -10,6 +10,26 @@
     <h1>Add a program</h1>
     <div>
       <h2>Select one or more children</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Children</mat-label>
+        <mat-select [formControl]="childrenForm" multiple>
+          <mat-option *ngFor="let child of children$ | async" [value]="child.name">{{child.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-button>Add new child</button>
+    </div>
+    <div>
+      <h2>Choose the type of program</h2>
+      <mat-form-field appearance="outline">
+        <mat-label>Program type</mat-label>
+        <mat-select [formControl]="programForm">
+          <mat-option *ngFor="let program of programTypes$ | async" [value]="program.type">{{program.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button mat-raised-button >Reset</button>
+      <button mat-raised-button color="primary" >Save program</button>
     </div>
   </mat-card>
 
