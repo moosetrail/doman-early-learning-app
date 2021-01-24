@@ -1,25 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReadingChecklistComponent } from './../../../reading-program/components/reading-checklist/reading-checklist.component';
+import { MockComponent } from 'ng-mocks';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 
 import { DefaultHomePageComponent } from './default-home-page.component';
 
 describe('DefaultHomePageComponent', () => {
-  let component: DefaultHomePageComponent;
-  let fixture: ComponentFixture<DefaultHomePageComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ DefaultHomePageComponent ]
-    })
-    .compileComponents();
+  let spectator: Spectator<DefaultHomePageComponent>;
+  const createComponent = createComponentFactory({
+    component: DefaultHomePageComponent,
+    declarations: [MockComponent(ReadingChecklistComponent)],
+    providers: [],
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(DefaultHomePageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() => (spectator = createComponent()));
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator).toBeTruthy();
   });
 });

@@ -1,25 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 
 import { ReadingCategoryComponent } from './reading-category.component';
 
 describe('ReadingCategoryComponent', () => {
-  let component: ReadingCategoryComponent;
-  let fixture: ComponentFixture<ReadingCategoryComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ReadingCategoryComponent ]
-    })
-    .compileComponents();
+  let spectator: Spectator<ReadingCategoryComponent>;
+  const createComponent = createComponentFactory({
+    component: ReadingCategoryComponent,
+    providers: [],
+    imports: [MatMenuModule, MatIconModule, MatCardModule, MatButtonModule]
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ReadingCategoryComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() => (spectator = createComponent()));
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator).toBeTruthy();
   });
 });

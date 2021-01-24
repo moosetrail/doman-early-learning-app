@@ -8,4 +8,13 @@
 
 button {
   margin-right: 1em;
+
+  &.add {
+    font-size: 1em;
+    line-height: inherit;
+  }
+}
+
+.configuration-unit {
+  margin-bottom: 2em;
 }

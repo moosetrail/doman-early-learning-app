@@ -1,25 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { Spectator, createComponentFactory } from '@ngneat/spectator/jest';
 
 import { ChecklistItemComponent } from './checklist-item.component';
 
 describe('ChecklistItemComponent', () => {
-  let component: ChecklistItemComponent;
-  let fixture: ComponentFixture<ChecklistItemComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ ChecklistItemComponent ]
-    })
-    .compileComponents();
+  let spectator: Spectator<ChecklistItemComponent>;
+  const createComponent = createComponentFactory({
+  component: ChecklistItemComponent,
+  providers: [
+  ],
+  imports: [MatCheckboxModule]
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ChecklistItemComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() => spectator = createComponent());
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+  expect(spectator).toBeTruthy();
   });
 });

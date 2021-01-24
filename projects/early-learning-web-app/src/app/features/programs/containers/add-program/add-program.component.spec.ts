@@ -1,25 +1,36 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
+import { ProgramsService } from './../../services/programs.service';
+import { ChildService } from './../../../../shared/services/child.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { AddProgramComponent } from './add-program.component';
+import { mockProvider } from '@ngneat/spectator';
 
 describe('AddProgramComponent', () => {
-  let component: AddProgramComponent;
-  let fixture: ComponentFixture<AddProgramComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ AddProgramComponent ]
-    })
-    .compileComponents();
+  let spectator: Spectator<AddProgramComponent>;
+  const createComponent = createComponentFactory({
+    component: AddProgramComponent,
+    providers: [
+      mockProvider(ChildService),
+      mockProvider(ProgramsService),
+    ],
+    imports: [
+      MatFormFieldModule,
+      MatSelectModule,
+      MatButtonModule,
+      MatCardModule,
+      FormsModule,
+      ReactiveFormsModule,
+    ],
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(AddProgramComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(() => (spectator = createComponent()));
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator).toBeTruthy();
   });
 });
