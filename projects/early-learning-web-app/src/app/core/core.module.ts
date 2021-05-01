@@ -1,3 +1,4 @@
+import { DefaultApiEndpointInterceptor } from './interceptors/default-api-endpoint.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -7,6 +8,7 @@ import { MainLayoutComponent } from './containers/main-layout/main-layout.compon
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ReadingProgramModule } from '../features/reading-program/reading-program.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [MainLayoutComponent],
@@ -23,6 +25,9 @@ import { ReadingProgramModule } from '../features/reading-program/reading-progra
     // LOCAL
     SharedModule,
     ReadingProgramModule
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: DefaultApiEndpointInterceptor, multi: true },
   ],
   exports: [MainLayoutComponent]
 })

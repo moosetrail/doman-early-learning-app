@@ -15,7 +15,7 @@
         <mat-select [formControl]="childrenForm" multiple>
           <mat-option *ngFor="let child of children$ | async" [value]="child.name">{{child.name}}</mat-option>
         </mat-select>
-        <mat-hint><button mat-button class="add" color="primary">Add new child</button></mat-hint>
+        <mat-hint><button mat-button class="add" color="primary" (click)="addChild()">Add new child</button></mat-hint>
       </mat-form-field>
     </div>
     <div>

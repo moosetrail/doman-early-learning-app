@@ -3,9 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { ProgramsRoutingModule } from './programs-routing.module';
 import { AddProgramComponent } from './containers/add-program/add-program.component';
+import { AddChildComponent } from './containers/add-child/add-child.component';
 
 @NgModule({
-  declarations: [AddProgramComponent],
+  declarations: [AddProgramComponent, AddChildComponent],
   imports: [
     SharedModule,
     ProgramsRoutingModule
