@@ -11,10 +11,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .content {
   max-width: 1200px;
+  margin-bottom: 4em;
 }
 
 .btn-row {
   button {
     margin-left: 1em;
   }
+}
+
+.space-down,.space-bottom {
+  margin-bottom: 1em;
+}
+.space-top {
+  margin-top: 1em;
+}
+.space-top-xl {
+  margin-top: 3em;
 }

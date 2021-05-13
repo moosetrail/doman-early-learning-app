@@ -10,23 +10,27 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>
+      <button mat-menu-item id="completed" *ngIf="showMoveToCompleted">
         <mat-icon>assignment_turned_in</mat-icon>
         <span>Move to completed</span>
       </button>
-      <button mat-menu-item disabled>
+      <button mat-menu-item id="current" *ngIf="showMoveToCurrent">
+        <mat-icon>today</mat-icon>
+        <span>Move to current</span>
+      </button>
+      <button mat-menu-item id="planned" *ngIf="showMoveToPlanned">
         <mat-icon>calendar_today</mat-icon>
         <span>Move to planned</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item id="remove" *ngIf="showRemove">
         <mat-icon>clear</mat-icon>
         <span>Remove from plan</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item id="statistics" *ngIf="showStatistics">
         <mat-icon>insights</mat-icon>
         <span>View statistics</span>
       </button>
-      <button mat-menu-item>
+      <button mat-menu-item id="edit" *ngIf="showEdit" (click)=clickEdit()>
         <mat-icon>edit</mat-icon>
         <span>Edit category</span>
       </button>

@@ -9,6 +9,9 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { ReadingProgramModule } from '../features/reading-program/reading-program.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   declarations: [MainLayoutComponent],
@@ -24,7 +27,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
     // LOCAL
     SharedModule,
-    ReadingProgramModule
+    ReadingProgramModule,
+    StoreModule.forRoot({}),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: DefaultApiEndpointInterceptor, multi: true },

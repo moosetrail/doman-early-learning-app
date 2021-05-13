@@ -1,4 +1,4 @@
-<div class="container" fxLayout="column" fxLayoutAlign="center center">
+<div fxFlex class="container" fxLayout="column" fxLayoutAlign="center center">
   <div
     fxFlex
     fxFill
@@ -31,57 +31,120 @@
           Plan single words for
           {{ (currentProgram$ | async)?.children | listChildren }}
         </h1>
-        <div>
-          <h2>Completed categories</h2>
-          <div fxLayout="column" fxLayoutAlign="center center">
-            <button mat-mini-fab matTooltip="Load more completed categories">
-              <mat-icon>expand_less</mat-icon>
-            </button>
-          </div>
+
+        <div class="space-top">
           <div
-            *ngIf="completedCategories$ != null"
-            fxLayout="row"
-            fxLayoutGap="1em"
+            cdkDropList
+            #completedList="cdkDropList"
+            [cdkDropListData]="completed"
+            [cdkDropListConnectedTo]="[plannedList]"
+            cdkDropListOrientation="horizontal"
+            class="drop-zone"
+            id="completed"
+            (cdkDropListDropped)="drop($event)"
           >
-            <app-reading-category
-              fxFlex
-              *ngFor="let c of completedCategories$ | async"
-              [category]="c"
-            >
-            </app-reading-category>
+            <ng-container *ngIf="showCompleted; else noCompleted">
+              <h2>Completed categories</h2>
+              <div
+                fxLayout="column"
+                fxLayoutAlign="center center"
+                class="space-down"
+              >
+                <button
+                  mat-mini-fab
+                  matTooltip="Load more completed categories"
+                >
+                  <mat-icon>expand_less</mat-icon>
+                </button>
+              </div>
+
+              <div
+                *ngIf="completed.length > 0"
+                fxLayout="row"
+                fxLayoutGap="1em"
+              >
+                <app-reading-category
+                  fxFlex
+                  *ngFor="let c of completed"
+                  [category]="c"
+                  class="completed"
+                  [showMoveToPlanned]="false"
+                  [showMoveToCurrent]="false"
+                  [showMoveToCompleted]="false"
+                  [showEdit]="false"
+                  [showRemove]="false"
+                >
+                </app-reading-category>
+              </div>
+            </ng-container>
+            <ng-template #noCompleted>
+              <button
+                mat-button
+                style="float: right"
+                (click)="showCompletedCategories()"
+              >
+                Show completed categories
+              </button>
+            </ng-template>
           </div>
         </div>
-        <div>
+
+        <div class="current-categories space-top-xl space-bottom">
           <h2>Current categories</h2>
           <div
-            *ngIf="currentCategories$ != null"
-            fxLayout="row"
-            fxLayoutGap="1em"
+            cdkDropList
+            #currentList="cdkDropList"
+            [cdkDropListData]="current"
+            [cdkDropListConnectedTo]="[plannedList, completedList]"
+            cdkDropListOrientation="horizontal"
+            class="drop-zone"
+            (cdkDropListDropped)="drop($event)"
+            id="current"
           >
-            <app-reading-category
-              fxFlex
-              *ngFor="let c of currentCategories$ | async"
-              [category]="c"
-            >
-            </app-reading-category>
+            <div *ngIf="current.length > 0" fxLayout="row" fxLayoutGap="1em">
+              <app-reading-category
+                fxFlex
+                *ngFor="let c of current"
+                [category]="c"
+                [showMoveToCurrent]="false"
+                (edit)="editCategory($event)"
+              >
+              </app-reading-category>
+            </div>
           </div>
         </div>
-        <div>
+
+        <div class="space-top">
           <h2>Planned categories</h2>
+          <div
+            cdkDropList
+            #plannedList="cdkDropList"
+            [cdkDropListData]="planned"
+            [cdkDropListConnectedTo]="[currentList, completedList]"
+            cdkDropListOrientation="horizontal"
+            class="drop-zone"
+            (cdkDropListDropped)="drop($event)"
+            id="planned"
+          >
+            <div *ngIf="planned.length > 0" fxLayout="row" fxLayoutGap="1em">
+              <app-reading-category
+                fxFlex
+                *ngFor="let c of planned"
+                [category]="c"
+                cdkDrag
+                class="planned"
+                [showMoveToPlanned]="false"
+                (edit)="editCategory($event)"
+              >
+              </app-reading-category>
+            </div>
+          </div>
 
           <div
-            *ngIf="plannedCategories$ != null"
-            fxLayout="row"
-            fxLayoutGap="1em"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            class="space-top"
           >
-            <app-reading-category
-              fxFlex
-              *ngFor="let c of plannedCategories$ | async"
-              [category]="c"
-            >
-            </app-reading-category>
-          </div>
-          <div fxLayout="column" fxLayoutAlign="center center">
             <button mat-mini-fab matTooltip="Load more planned categories">
               <mat-icon>expand_more</mat-icon>
             </button>
@@ -94,9 +157,9 @@
         fxFlexAlign="end"
         class="addBtn"
       >
-        <button mat-fab matTooltip="Add a new word category" color="primary">
-          <mat-icon>add</mat-icon>
-        </button>
+        <button mat-fab matTooltip="Add a new word category" color="primary" (click)="editCategory(null)">
+          <mat-icon>add</mat-icon></button
+        ><!---->
       </div>
     </ng-template>
   </div>

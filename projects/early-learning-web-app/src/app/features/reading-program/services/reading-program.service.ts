@@ -10,57 +10,6 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ReadingProgramService {
-  private currentProgram$: BehaviorSubject<ReadingProgram | null> = new BehaviorSubject<ReadingProgram | null>(
-    {
-      children: [{ name: 'Phoenix' }],
-    } as ReadingProgram
-  );
-
-  constructor() {}
-
-  public getAllReadingPrograms(): Observable<ReadingProgram[]> {
-    return of([
-      {
-        children: [{ name: 'Phoenix' }],
-      } as ReadingProgram /*
-      {
-        children: [
-          { name: 'Zacharias' },
-          { name: 'Jacqueline' },
-          { name: 'Dominiqué' },
-        ],
-      } as ReadingProgram, */,
-    ]).pipe(
-      tap((programs) => {
-        if (programs.length === 1) {
-          this.currentProgram$.next(programs[0]);
-        }
-      })
-    );
-  }
-
-  public getCurrentProgram(): Observable<ReadingProgram | null> {
-    return this.currentProgram$;
-  }
-
-  public setCurrentReadingProgram(program: ReadingProgram) {
-    this.currentProgram$.next(program);
-  }
-
-  public getCurrentWordCategories(): Observable<
-    ReadingCategory<ReadingWord>[]
-  > {
-    return of(this.testSet1);
-  }
-
-  public getPlannedWordCategories(): Observable<ReadingCategory<ReadingWord>[]> {
-    return of([...this.testSet1]);
-  }
-
-  public getCompletedWordCategories(): Observable<ReadingCategory<ReadingWord>[]> {
-    return of([...this.testSet1]);
-  }
-
 
   private testSet1 = [
     {
@@ -114,4 +63,51 @@ export class ReadingProgramService {
       ],
     },
   ];
+
+  private currentProgram$: BehaviorSubject<ReadingProgram | null> = new BehaviorSubject<ReadingProgram | null>(null);
+
+  constructor() {}
+
+  public getAllReadingPrograms(): Observable<ReadingProgram[]> {
+    return of([
+      {
+        children: [{ name: 'Phoenix' }],
+      } as ReadingProgram,
+      {
+        children: [
+          { name: 'Zacharias' },
+          { name: 'Jacqueline' },
+          { name: 'Dominiqué' },
+        ],
+      } as ReadingProgram,
+    ]).pipe(
+      tap((programs) => {
+        if (programs.length === 1) {
+          this.currentProgram$.next(programs[0]);
+        }
+      })
+    );
+  }
+
+  public getCurrentProgram(): Observable<ReadingProgram | null> {
+    return this.currentProgram$.asObservable();
+  }
+
+  public setCurrentReadingProgram(program: ReadingProgram) {
+    this.currentProgram$.next(program);
+  }
+
+  public getCurrentWordCategories(): Observable<
+    ReadingCategory<ReadingWord>[]
+  > {
+    return of(this.testSet1);
+  }
+
+  public getPlannedWordCategories(): Observable<ReadingCategory<ReadingWord>[]> {
+    return of([...this.testSet1]);
+  }
+
+  public getCompletedWordCategories(): Observable<ReadingCategory<ReadingWord>[]> {
+    return of([...this.testSet1]);
+  }
 }
