@@ -18,7 +18,7 @@ import { ChecklistItemComponent } from './components/checklist-item/checklist-it
 import { ListChildrenPipe } from './pipes/list-children.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import * as fromSharedState from './reducers/SharedState';
+import * as fromSharedState from './SharedState';
 
 @NgModule({
   declarations: [ListItemsPipe, ChecklistItemComponent, ListChildrenPipe],

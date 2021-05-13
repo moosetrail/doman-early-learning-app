@@ -15,6 +15,7 @@ const routes: Routes = [
       ),
   },
   { path: 'programs', loadChildren: () => import('./features/programs/programs.module').then(m => m.ProgramsModule) },
+  { path: 'children', loadChildren: () => import('./features/children/children.module').then(m => m.ChildrenModule) },
 ];
 
 @NgModule({
