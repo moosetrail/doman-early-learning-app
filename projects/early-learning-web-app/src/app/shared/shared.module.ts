@@ -19,6 +19,7 @@ import { ListChildrenPipe } from './pipes/list-children.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import * as fromSharedState from './SharedState';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [ListItemsPipe, ChecklistItemComponent, ListChildrenPipe],
@@ -27,6 +28,7 @@ import * as fromSharedState from './SharedState';
     // VENDOR
     CommonModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FlexLayoutModule,
 
@@ -54,6 +56,7 @@ import * as fromSharedState from './SharedState';
     // VENDOR
     CommonModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FlexLayoutModule,
 

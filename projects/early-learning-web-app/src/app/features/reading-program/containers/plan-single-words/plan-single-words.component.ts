@@ -13,6 +13,9 @@ import {
 } from '@angular/cdk/drag-drop';
 import { takeUntil } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import * as actions from '../../actions/plan-single-words.actions';
+import * as readingPrograms from '../../selectors/reading-programs.selectors';
 
 @Component({
   selector: 'app-plan-single-words',
@@ -20,7 +23,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./plan-single-words.component.scss'],
 })
 export class PlanSingleWordsComponent implements OnInit, OnDestroy {
-  public programs$!: Observable<ReadingProgram[]>;
+  public programs$ = this.store.select(readingPrograms.allReadingPrograms);
   public currentProgram$!: Observable<ReadingProgram | null>;
   public showCompleted = false;
 
@@ -29,10 +32,10 @@ export class PlanSingleWordsComponent implements OnInit, OnDestroy {
   public planned: ReadingCategory<ReadingWord>[] = [];
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private programService: ReadingProgramService, public dialog: MatDialog) {}
+  constructor(private programService: ReadingProgramService, public dialog: MatDialog, private store: Store) {}
 
   ngOnInit(): void {
-    this.programs$ = this.programService.getAllReadingPrograms();
+    this.store.dispatch(actions.loadSingleWordsPrograms());
     this.currentProgram$ = this.programService.getCurrentProgram();
     this.programService
       .getCurrentWordCategories()
