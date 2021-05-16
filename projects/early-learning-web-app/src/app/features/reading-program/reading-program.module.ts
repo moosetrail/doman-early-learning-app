@@ -4,7 +4,6 @@ import { SharedModule } from '../../shared/shared.module';
 
 import { ReadingProgramRoutingModule } from './reading-program-routing.module';
 import { ReadingChecklistComponent } from './components/reading-checklist/reading-checklist.component';
-import { PlanSingleWordsComponent } from './containers/plan-single-words/plan-single-words.component';
 import { ReadingCategoryComponent } from './components/reading-category/reading-category.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EditCategoryComponent } from './components/edit-category/edit-category.component';
@@ -13,13 +12,19 @@ import { StoreModule } from '@ngrx/store';
 import * as fromReadingProgramState from './reading-program.state';
 import { EffectsModule } from '@ngrx/effects';
 import { LoadReadingProgramsEffects } from './effects/load-reading-programs.effects';
+import { ChooseReadingProgramComponent } from './containers/choose-reading-program/choose-reading-program.component';
+import { SingleWordReadingProgramComponent } from './containers/single-word-reading-program/single-word-reading-program.component';
+import { PlanReadingProgramComponent } from './containers/plan-reading-program/plan-reading-program.component';
+import { SingleWordsCategoriesEffects } from './effects/single-words-categories.effects';
 
 @NgModule({
   declarations: [
     ReadingChecklistComponent,
-    PlanSingleWordsComponent,
     ReadingCategoryComponent,
     EditCategoryComponent,
+    ChooseReadingProgramComponent,
+    SingleWordReadingProgramComponent,
+    PlanReadingProgramComponent,
   ],
   imports: [
     SharedModule,
@@ -32,7 +37,7 @@ import { LoadReadingProgramsEffects } from './effects/load-reading-programs.effe
       fromReadingProgramState.reducers,
       { metaReducers: fromReadingProgramState.metaReducers }
     ),
-    EffectsModule.forFeature([LoadReadingProgramsEffects]),
+    EffectsModule.forFeature([LoadReadingProgramsEffects, SingleWordsCategoriesEffects]),
   ],
   exports: [ReadingChecklistComponent],
 })

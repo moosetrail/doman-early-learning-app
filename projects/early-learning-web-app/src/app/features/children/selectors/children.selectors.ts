@@ -20,4 +20,7 @@ export const isLoadingChildren = createSelector(
   (state) => state.isLoadingChildren
 );
 
-
+export const haveLoadingError = createSelector(
+  childDataState,
+  (state) => !state.isLoadingChildren && state.loadingError != null
+);

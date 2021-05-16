@@ -1,43 +1,36 @@
-import { EditCategoryComponent } from '../../components/edit-category/edit-category.component';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { EditCategoryComponent } from './../../components/edit-category/edit-category.component';
+import { Store } from '@ngrx/store';
+import { MatDialog } from '@angular/material/dialog';
+import { Component, Input, OnInit } from '@angular/core';
+import { Child } from 'projects/early-learning-web-app/src/app/shared/models/interfaces/child';
 import { Observable, Subject } from 'rxjs';
-import { ReadingProgram } from '../../models/interfaces/reading-program';
-import { ReadingProgramService } from '../../services/reading-program.service';
-import { MatSelectChange } from '@angular/material/select';
 import { ReadingCategory } from '../../models/interfaces/reading-category';
 import { ReadingWord } from '../../models/interfaces/reading-word';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
-import { takeUntil } from 'rxjs/operators';
-import { MatDialog } from '@angular/material/dialog';
-import { Store } from '@ngrx/store';
-import * as actions from '../../actions/plan-single-words.actions';
-import * as readingPrograms from '../../selectors/reading-programs.selectors';
+import { OnDestroy } from '@angular/core';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import * as actions from '../../actions/single-word-reading-program-component.actions';
 
 @Component({
-  selector: 'app-plan-single-words',
-  templateUrl: './plan-single-words.component.html',
-  styleUrls: ['./plan-single-words.component.scss'],
+  selector: 'app-single-word-reading-program',
+  templateUrl: './single-word-reading-program.component.html',
+  styleUrls: ['./single-word-reading-program.component.scss']
 })
-export class PlanSingleWordsComponent implements OnInit, OnDestroy {
-  public programs$ = this.store.select(readingPrograms.allReadingPrograms);
-  public currentProgram$!: Observable<ReadingProgram | null>;
+export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
+  @Input() programId!: string;
   public showCompleted = false;
 
+  public childrenOnProgram$: Observable<Child[]> | null = null;
   public completed: ReadingCategory<ReadingWord>[] = [];
   public current: ReadingCategory<ReadingWord>[] = [];
   public planned: ReadingCategory<ReadingWord>[] = [];
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private programService: ReadingProgramService, public dialog: MatDialog, private store: Store) {}
+  constructor(public dialog: MatDialog, private store: Store) { }
 
   ngOnInit(): void {
-    this.store.dispatch(actions.loadSingleWordsPrograms());
-    this.currentProgram$ = this.programService.getCurrentProgram();
-    this.programService
+    this.store.dispatch(actions.loadSingleWordReadingProgramComponents());
+
+    /* this.programService
       .getCurrentWordCategories()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((categories) => {
@@ -54,16 +47,12 @@ export class PlanSingleWordsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((categories) => {
         this.completed = categories;
-      });
+      }); */
   }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-  }
-
-  public selectProgram(change: MatSelectChange): void {
-    this.programService.setCurrentReadingProgram(change.value);
   }
 
   public showCompletedCategories(): void {

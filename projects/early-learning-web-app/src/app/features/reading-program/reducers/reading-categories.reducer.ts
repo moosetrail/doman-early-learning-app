@@ -21,6 +21,5 @@ export const initialState: ReadingCategoriesState = {
 
 export const reducer = createReducer(
   initialState,
-
 );
 

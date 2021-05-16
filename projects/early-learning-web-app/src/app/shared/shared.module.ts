@@ -20,9 +20,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import * as fromSharedState from './SharedState';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderComponent } from './components/loader/loader.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [ListItemsPipe, ChecklistItemComponent, ListChildrenPipe],
+  declarations: [ListItemsPipe, ChecklistItemComponent, ListChildrenPipe, LoaderComponent],
   providers: [ListItemsPipe],
   imports: [
     // VENDOR
@@ -42,6 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatTooltipModule,
     StoreModule.forFeature(
@@ -70,6 +73,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatTooltipModule,
 
@@ -77,6 +81,7 @@ import { HttpClientModule } from '@angular/common/http';
     ListChildrenPipe,
     ListItemsPipe,
     ChecklistItemComponent,
+    LoaderComponent,
   ],
 })
 export class SharedModule {}

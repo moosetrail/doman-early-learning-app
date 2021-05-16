@@ -13,6 +13,11 @@ const readingProgramsState = createSelector(
   (state) => state.readingPrograms
 );
 
+const readingProgram = (programId: string) => createSelector(
+  readingProgramsState,
+  (state) => state.programs.find(x => x.programId === programId)
+);
+
 export const allReadingPrograms = createSelector(
   readingProgramsState,
   fromChildren.allChildren,
@@ -33,5 +38,24 @@ export const isLoadingReadingPrograms = createSelector(
   readingProgramsState,
   fromChildren.isLoadingChildren,
   (state, isLoadingChildren) => state.isLoadingPrograms || isLoadingChildren
+);
+
+export const childrenOnProgram = (programId: string) => createSelector(
+  readingProgram(programId),
+  fromChildren.allChildren,
+  (dto, allChildren) => {
+    if(dto === undefined){
+      return [];
+    }
+
+    const children = allChildren.filter((c) => dto.childrenIds.indexOf(c.id) >= 0);
+    return children;
+  }
+);
+
+export const haveLoadingError = createSelector(
+  readingProgramsState,
+  fromChildren.haveLoadingError,
+  (state, childLoadingError) => (!state.isLoadingPrograms && state.loadingError != null) || childLoadingError
 );
 

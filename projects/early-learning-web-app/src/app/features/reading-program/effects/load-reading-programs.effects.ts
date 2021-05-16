@@ -1,7 +1,7 @@
 import { ReadingProgramApiService } from './../services/reading-program-api.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as fromPlanSingleWords from '../actions/plan-single-words.actions';
+import * as fromChooseReadingProgramComponent from '../actions/choose-reading-program-component.actions';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as actions from '../actions/load-reading-programs-effects.actions';
 import { of } from 'rxjs';
@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 export class LoadReadingProgramsEffects {
   loadReadingPrograms$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fromPlanSingleWords.loadSingleWordsPrograms),
+      ofType(fromChooseReadingProgramComponent.loadSingleWordsPrograms),
       mergeMap(() =>
         this.api.getAllReadingPrograms().pipe(
           map((programs) =>

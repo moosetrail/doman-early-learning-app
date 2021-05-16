@@ -1,7 +1,7 @@
 import { ReadingProgramDto } from './../../reading-program/models/dtos/reading-program-dto';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Action, createReducer, on } from '@ngrx/store';
-import * as fromPlanSingleWordsComponent from '../actions/plan-single-words.actions';
+import * as fromChooseReadingProgramComponent from '../actions/choose-reading-program-component.actions';
 import * as fromLoadReadingProgramsEffects from '../actions/load-reading-programs-effects.actions';
 
 export const readingProgramsDataFeatureKey = 'readingPrograms';
@@ -20,7 +20,7 @@ export const initialState: ReadingProgramsDataState = {
 
 export const reducer = createReducer(
   initialState,
-  on(fromPlanSingleWordsComponent.loadSingleWordsPrograms, (state) => ({
+  on(fromChooseReadingProgramComponent.loadSingleWordsPrograms, (state) => ({
     ...state,
     isLoadingPrograms: true,
     loadingError: null,
