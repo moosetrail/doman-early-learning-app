@@ -13,9 +13,9 @@ describe('ListChildrenPipe', () => {
 
   it('should sum up the given list of numbers (template)', () => {
     const children: Child[] = [
-      { name: 'Adam' } as Child,
-      { name: 'Ben' } as Child,
-      { name: 'Caesar' } as Child,
+      { firstName: 'Adam' } as Child,
+      { firstName: 'Ben' } as Child,
+      { firstName: 'Caesar' } as Child,
     ];
     const itemPipe = {transform: () => 'children listed'} as ListItemsPipe;
     const spy = jest.spyOn(itemPipe, 'transform');
@@ -31,7 +31,7 @@ describe('ListChildrenPipe', () => {
     });
 
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(children.map(c => c.name));
+    expect(spy).toHaveBeenCalledWith(children.map(c => c.firstName));
     expect(spectator.element).toHaveText('children listed');
   });
 });

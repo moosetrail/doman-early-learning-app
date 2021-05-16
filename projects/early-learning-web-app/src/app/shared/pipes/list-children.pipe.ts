@@ -14,6 +14,6 @@ export class ListChildrenPipe implements PipeTransform {
       return '';
     }
 
-    return this.listPipe.transform(children.map(child => child.name));
+    return this.listPipe.transform(children.map(child => child.firstName));
   }
 }

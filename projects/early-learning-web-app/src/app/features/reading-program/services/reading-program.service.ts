@@ -71,13 +71,13 @@ export class ReadingProgramService {
   public getAllReadingPrograms(): Observable<ReadingProgram[]> {
     return of([
       {
-        children: [{ name: 'Phoenix' }],
+        children: [{ firstName: 'Phoenix' }],
       } as ReadingProgram,
       {
         children: [
-          { name: 'Zacharias' },
-          { name: 'Jacqueline' },
-          { name: 'Dominiqué' },
+          { firstName: 'Zacharias' },
+          { firstName: 'Jacqueline' },
+          { firstName: 'Dominiqué' },
         ],
       } as ReadingProgram,
     ]).pipe(

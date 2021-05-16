@@ -1,3 +1,4 @@
+import { ChildrenModule } from './../children/children.module';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -23,6 +24,7 @@ import { LoadReadingProgramsEffects } from './effects/load-reading-programs.effe
   imports: [
     SharedModule,
     ReadingProgramRoutingModule,
+    ChildrenModule,
     DragDropModule,
     MatDialogModule,
     StoreModule.forFeature(
