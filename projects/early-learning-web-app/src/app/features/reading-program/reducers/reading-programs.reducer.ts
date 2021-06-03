@@ -1,6 +1,6 @@
 import { ReadingProgramDto } from './../../reading-program/models/dtos/reading-program-dto';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Action, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as fromChooseReadingProgramComponent from '../actions/choose-reading-program-component.actions';
 import * as fromLoadReadingProgramsEffects from '../actions/load-reading-programs-effects.actions';
 
@@ -20,11 +20,17 @@ export const initialState: ReadingProgramsDataState = {
 
 export const reducer = createReducer(
   initialState,
-  on(fromChooseReadingProgramComponent.loadSingleWordsPrograms, (state) => ({
-    ...state,
-    isLoadingPrograms: true,
-    loadingError: null,
-  })),
+  on(fromChooseReadingProgramComponent.loadSingleWordsPrograms, (state) => {
+    if (state.programs.length === 0) {
+      return {
+        ...state,
+        isLoadingPrograms: true,
+        loadingError: null,
+      };
+    } else {
+      return state;
+    }
+  }),
   on(
     fromLoadReadingProgramsEffects.loadReadingProgramsFromApiFailure,
     (state, payload) => ({
@@ -38,7 +44,7 @@ export const reducer = createReducer(
     (state, payload) => ({
       ...state,
       isLoadingPrograms: false,
-      programs: payload.data
+      programs: payload.data,
     })
-  ),
+  )
 );

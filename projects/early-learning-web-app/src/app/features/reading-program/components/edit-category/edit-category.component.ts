@@ -20,11 +20,14 @@ export class EditCategoryComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: EditCategoryInfo<ReadingWord>) { }
 
   ngOnInit(): void {
-    if(this.data != null) {
+    if(this.data.category != null) {
       this.isEditMode = true;
       this.edit = this.data.category;
     }
     this.children = this.data.children;
   }
 
+  public addWord(){
+
+  }
 }

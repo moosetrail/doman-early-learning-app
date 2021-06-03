@@ -16,6 +16,8 @@ import { ChooseReadingProgramComponent } from './containers/choose-reading-progr
 import { SingleWordReadingProgramComponent } from './containers/single-word-reading-program/single-word-reading-program.component';
 import { PlanReadingProgramComponent } from './containers/plan-reading-program/plan-reading-program.component';
 import { SingleWordsCategoriesEffects } from './effects/single-words-categories.effects';
+import { CategoryListComponent } from './components/category-list/category-list.component';
+import { CurrentCategoryListComponent } from './components/current-category-list/current-category-list.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { SingleWordsCategoriesEffects } from './effects/single-words-categories.
     ChooseReadingProgramComponent,
     SingleWordReadingProgramComponent,
     PlanReadingProgramComponent,
+    CategoryListComponent,
+    CurrentCategoryListComponent,
   ],
   imports: [
     SharedModule,
