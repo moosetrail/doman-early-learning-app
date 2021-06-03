@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --open",
+    "start": "ng serve --open --hmr",
     "build": "ng build",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -19,7 +19,7 @@
     "@angular/common": "~12.0.3",
     "@angular/compiler": "~12.0.3",
     "@angular/core": "~12.0.3",
-    "@angular/flex-layout": "^11.0.0-beta.33",
+    "@angular/flex-layout": "^12.0.0-beta.34",
     "@angular/forms": "~12.0.3",
     "@angular/material": "^12.0.2",
     "@angular/platform-browser": "~12.0.3",
@@ -56,7 +56,7 @@
     "eslint-plugin-prefer-arrow": "1.2.2",
     "jest": "^26.6.3",
     "jest-preset-angular": "^8.3.2",
-    "ng-mocks": "^11.2.7",
+    "ng-mocks": "^12.0.2",
     "ts-node": "~8.3.0",
     "typescript": "~4.2.4"
   }
