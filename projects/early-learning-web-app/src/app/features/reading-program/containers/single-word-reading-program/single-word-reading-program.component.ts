@@ -81,7 +81,7 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
     this.showCompleted = true;
   }
 
-  public drop(event: CdkDragDrop<ReadingCategory<ReadingWord>[] | null>): void {
+  public drop(event: CdkDragDrop<ReadingCategory<ReadingWord>[] | any>): void {
     if (event.container.data == null || event.previousContainer.data == null) {
       return;
     }

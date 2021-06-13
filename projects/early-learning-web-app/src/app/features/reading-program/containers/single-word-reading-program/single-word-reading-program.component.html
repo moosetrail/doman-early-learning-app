@@ -61,7 +61,7 @@
       cdkDropList
       #plannedList="cdkDropList"
       [cdkDropListData]="planned"
-      [cdkDropListConnectedTo]="[currentList, completedList]"
+      [cdkDropListConnectedTo]="['currentList', 'completedList']"
       cdkDropListOrientation="horizontal"
       class="drop-zone"
       (cdkDropListDropped)="drop($event)"

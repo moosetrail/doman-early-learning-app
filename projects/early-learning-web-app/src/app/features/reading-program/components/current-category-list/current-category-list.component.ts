@@ -23,7 +23,7 @@ export class CurrentCategoryListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public drop(event: CdkDragDrop<ReadingCategory<ReadingWord>[] | null>): void {
+  public drop(event: CdkDragDrop<ReadingCategory<ReadingWord>[] | any>): void {
     if (
       event.container.data !== null &&
       event.previousContainer.data !== null
