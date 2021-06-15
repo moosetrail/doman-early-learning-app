@@ -1,11 +1,11 @@
 import { AddChildComponent } from './../add-child/add-child.component';
 import { ProgramsService } from './../../services/programs.service';
 import { Observable } from 'rxjs';
-import { Child } from 'projects/early-learning-web-app/src/app/shared/models/interfaces/child';
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ProgramType } from 'projects/early-learning-web-app/src/app/shared/models/interfaces/program-type';
+import { ProgramType } from 'src/app/shared/models/interfaces/program-type';
 import { MatDialog } from '@angular/material/dialog';
+import { Child } from 'src/app/shared/models/interfaces/child';
 
 @Component({
   selector: 'app-add-program',

@@ -6,7 +6,6 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { Child } from 'projects/early-learning-web-app/src/app/shared/models/interfaces/child';
 import { Observable, Subject } from 'rxjs';
 import { ReadingCategory } from '../../models/interfaces/reading-category';
 import { ReadingWord } from '../../models/interfaces/reading-word';
@@ -21,6 +20,7 @@ import * as fromReadingCategories from '../../selectors/reading-categories.selec
 import { take, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import * as fromReadingProgram from '../../selectors/reading-programs.selectors';
+import { Child } from 'src/app/shared/models/interfaces/child';
 
 @Component({
   selector: 'app-single-word-reading-program',
