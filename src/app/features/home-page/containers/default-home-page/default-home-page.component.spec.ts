@@ -1,6 +1,6 @@
 import { ReadingChecklistComponent } from './../../../reading-program/components/reading-checklist/reading-checklist.component';
 import { MockComponent } from 'ng-mocks';
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
 import { DefaultHomePageComponent } from './default-home-page.component';
 

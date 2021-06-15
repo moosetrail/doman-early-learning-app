@@ -1,5 +1,5 @@
 import { AppComponent } from './app.component';
-import { createComponentFactory } from '@ngneat/spectator/jest';
+import { createComponentFactory } from '@ngneat/spectator';
 import { Spectator } from '@ngneat/spectator';
 import { MainLayoutComponent } from './core/containers/main-layout/main-layout.component';
 import { MockComponent } from 'ng-mocks';

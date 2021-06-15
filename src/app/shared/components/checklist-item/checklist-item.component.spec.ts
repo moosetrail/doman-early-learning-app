@@ -1,5 +1,5 @@
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { Spectator, createComponentFactory } from '@ngneat/spectator/jest';
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
 
 import { ChecklistItemComponent } from './checklist-item.component';
 

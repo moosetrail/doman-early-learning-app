@@ -21,7 +21,7 @@ export class ReadingProgramService {
         { textOnCard: 'Tommy' },
         { textOnCard: 'Herr Nilsson' },
       ],
-    },
+    } as ReadingCategory<ReadingWord>,
     {
       categoryName: 'Paw Patrol',
       cards: [
@@ -31,7 +31,7 @@ export class ReadingProgramService {
         { textOnCard: 'Zuma' },
         { textOnCard: 'Sky' },
       ],
-    },
+    } as ReadingCategory<ReadingWord>,
     {
       categoryName: 'Årstiderna',
       cards: [
@@ -41,7 +41,7 @@ export class ReadingProgramService {
         { textOnCard: 'Höst' },
         { textOnCard: 'Årstider' },
       ],
-    },
+    } as ReadingCategory<ReadingWord>,
     {
       categoryName: 'Frost 3',
       cards: [
@@ -51,7 +51,7 @@ export class ReadingProgramService {
         { textOnCard: 'Sven' },
         { textOnCard: 'Kristoffer' },
       ],
-    },
+    } as ReadingCategory<ReadingWord>,
     {
       categoryName: 'Aktiviteter',
       cards: [
@@ -61,7 +61,7 @@ export class ReadingProgramService {
         { textOnCard: 'Hoppa' },
         { textOnCard: 'Skoja' },
       ],
-    },
+    } as ReadingCategory<ReadingWord>,
   ];
 
   private currentProgram$: BehaviorSubject<ReadingProgram | null> = new BehaviorSubject<ReadingProgram | null>(null);

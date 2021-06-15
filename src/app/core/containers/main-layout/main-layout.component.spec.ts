@@ -5,7 +5,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MediaObserver } from '@angular/flex-layout';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Spectator, mockProvider } from '@ngneat/spectator';
-import { createComponentFactory } from '@ngneat/spectator/jest';
+import { createComponentFactory } from '@ngneat/spectator';
 
 import { MainLayoutComponent } from './main-layout.component';
 

@@ -1,6 +1,6 @@
 import { Child } from './../models/interfaces/child';
 import { mockProvider } from '@ngneat/spectator';
-import { createPipeFactory, SpectatorPipe } from '@ngneat/spectator/jest';
+import { createPipeFactory, SpectatorPipe } from '@ngneat/spectator';
 import { ListChildrenPipe } from './list-children.pipe';
 import { ListItemsPipe } from './list-items.pipe';
 
@@ -18,7 +18,7 @@ describe('ListChildrenPipe', () => {
       { firstName: 'Caesar' } as Child,
     ];
     const itemPipe = {transform: () => 'children listed'} as ListItemsPipe;
-    const spy = jest.spyOn(itemPipe, 'transform');
+    const spy = spyOn(itemPipe, 'transform');
 
     spectator = createPipe('{{ prop | listChildren }}', {
       hostProps: {
