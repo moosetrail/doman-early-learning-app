@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import 'styles/_materialTheme.scss';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container {
+  height: 100%;
+}
+
+.content {
+  max-width: 1200px;
+  margin-bottom: 4em;
+}
+
+.btn-row {
+  button {
+    margin-left: 1em;
+  }
+}
+
+.space-down,.space-bottom {
+  margin-bottom: 1em;
+}
+.space-top {
+  margin-top: 1em;
+}
+.space-top-xl {
+  margin-top: 3em;
+}
+
+.invisible {
+  visibility: hidden;
+}

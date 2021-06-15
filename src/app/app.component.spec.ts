@@ -1,35 +1,20 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { createComponentFactory } from '@ngneat/spectator/jest';
+import { Spectator } from '@ngneat/spectator';
+import { MainLayoutComponent } from './core/containers/main-layout/main-layout.component';
+import { MockComponent } from 'ng-mocks';
 
 describe('AppComponent', () => {
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+  let spectator: Spectator<AppComponent>;
+  const createComponent = createComponentFactory({
+    component: AppComponent,
+    declarations: [MockComponent(MainLayoutComponent)],
+    providers: [],
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  beforeEach(() => (spectator = createComponent()));
 
-  it(`should have as title 'EarlyLearningApp'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('EarlyLearningApp');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('EarlyLearningApp app is running!');
+  it('should create', () => {
+    expect(spectator).toBeTruthy();
   });
 });

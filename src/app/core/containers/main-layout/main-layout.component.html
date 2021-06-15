@@ -1,0 +1,26 @@
+<div fxLayout="column" class="container">
+  <mat-toolbar fxFlex="nogrow">
+    <div class="logo">Doman Early Learning</div>
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <mat-sidenav-container fxFlex>
+    <mat-sidenav
+      #snav
+      [mode]="isMobile ? 'over' : 'side'"
+      [position]="'end'"
+      [fixedInViewport]="isMobile"
+      fixedTopGap="56"
+    >
+      <mat-nav-list>
+        <a mat-list-item [routerLink]="['reading-program', 'plan', 'single-words']"> Reading program</a>
+        <a mat-list-item [routerLink]="['programs', 'add']"> Add program</a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
