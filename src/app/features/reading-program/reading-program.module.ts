@@ -18,6 +18,7 @@ import { PlanReadingProgramComponent } from './containers/plan-reading-program/p
 import { SingleWordsCategoriesEffects } from './effects/single-words-categories.effects';
 import { CategoryListComponent } from './components/category-list/category-list.component';
 import { CurrentCategoryListComponent } from './components/current-category-list/current-category-list.component';
+import { PlannedCategoryListComponent } from './components/planned-category-list/planned-category-list.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CurrentCategoryListComponent } from './components/current-category-list
     PlanReadingProgramComponent,
     CategoryListComponent,
     CurrentCategoryListComponent,
+    PlannedCategoryListComponent,
   ],
   imports: [
     SharedModule,

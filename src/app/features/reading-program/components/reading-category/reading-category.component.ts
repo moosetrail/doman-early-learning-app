@@ -4,10 +4,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'app-reading-category',
   templateUrl: './reading-category.component.html',
-  styleUrls: ['./reading-category.component.scss']
+  styleUrls: ['./reading-category.component.scss'],
 })
 export class ReadingCategoryComponent implements OnInit {
-
   @Input() category: ReadingCategory<any> | null = null;
   @Input() showMoveToCompleted = true;
   @Input() showMoveToPlanned = true;
@@ -18,9 +17,17 @@ export class ReadingCategoryComponent implements OnInit {
 
   @Output() edit = new EventEmitter<ReadingCategory<any>>();
 
-  constructor() { }
+  public numberToPad: boolean[] = [];
+
+  constructor() {}
 
   ngOnInit(): void {
+    if (this.category != null) {
+     const nbrToPad = 5 - this.category?.cards.length;
+     for (let i = 0; i < nbrToPad; i++) {
+       this.numberToPad[i] = true;
+     }
+    }
   }
 
   clickEdit(): void {

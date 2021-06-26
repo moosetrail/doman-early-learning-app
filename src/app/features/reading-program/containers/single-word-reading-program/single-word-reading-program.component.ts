@@ -2,10 +2,7 @@ import { EditCategoryInfo } from './../../models/interfaces/edit-category-info';
 import { EditCategoryComponent } from './../../components/edit-category/edit-category.component';
 import { Store } from '@ngrx/store';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ReadingCategory } from '../../models/interfaces/reading-category';
 import { ReadingWord } from '../../models/interfaces/reading-word';
@@ -33,7 +30,11 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
   public completed: ReadingCategory<ReadingWord>[] = [];
   public current: ReadingCategory<ReadingWord>[] = [];
   public planned: ReadingCategory<ReadingWord>[] = [];
+  public isLoadingPlanned$ = this.store.select(
+    fromReadingCategories.isLoadingPlannedCategories
+  );
   private unsubscribe$ = new Subject<void>();
+  private programId!: string;
 
   constructor(
     public dialog: MatDialog,
@@ -43,11 +44,15 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      const programId = params.programId;
+      this.programId = params.programId;
       this.store.dispatch(
-        actions.loadSingleWordReadingProgramComponents({ programId })
+        actions.loadSingleWordReadingProgramComponents({
+          programId: this.programId,
+        })
       );
-      this.childrenOnProgram$ = this.store.select(fromReadingProgram.childrenOnProgram(programId));
+      this.childrenOnProgram$ = this.store.select(
+        fromReadingProgram.childrenOnProgram(this.programId)
+      );
     });
 
     this.store
@@ -58,7 +63,7 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
       });
 
     this.store
-      .select(fromReadingCategories.plannedCategories)
+      .select(fromReadingCategories.plannedWordCategories)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((categories) => {
         this.planned = categories;
@@ -108,13 +113,38 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
       const dialogRef = this.dialog.open(EditCategoryComponent, {
         data: {
           category,
-          children
-        } as EditCategoryInfo<ReadingWord>
+          children,
+        } as EditCategoryInfo<ReadingWord>,
       });
 
       dialogRef.afterClosed().subscribe((result) => {
-        console.log('The dialog was closed');
+        if (result != undefined) {
+          this.store.dispatch(
+            actions.addNewCategory({
+              programId: this.programId,
+              name: result.name,
+              words: result.words,
+            })
+          );
+        }
       });
     });
+  }
+
+  public moveCategory(
+    event: CdkDragDrop<ReadingCategory<ReadingWord>[] | any>
+  ): void {
+
+    this.store.dispatch(
+      actions.moveCategory({
+        previousIndex: event.previousIndex,
+        newIndex: event.currentIndex,
+        fromList: event.previousContainer.id,
+        toList: event.container.id,
+        programId: this.programId
+      })
+    );
+
+    console.info('move category');
   }
 }

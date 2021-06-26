@@ -1,4 +1,4 @@
-<mat-card *ngIf="category != null">
+<mat-card *ngIf="category !== null">
   <mat-card-title fxLayout="row" fxLayoutAlign="center center">
     <span fxFlex>{{ category.categoryName }}</span>
     <button
@@ -10,10 +10,7 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item id="completed" *ngIf="showMoveToCompleted">
-        <mat-icon>assignment_turned_in</mat-icon>
-        <span>Move to completed</span>
-      </button>
+
       <button mat-menu-item id="current" *ngIf="showMoveToCurrent">
         <mat-icon>today</mat-icon>
         <span>Move to current</span>
@@ -21,6 +18,10 @@
       <button mat-menu-item id="planned" *ngIf="showMoveToPlanned">
         <mat-icon>calendar_today</mat-icon>
         <span>Move to planned</span>
+      </button>
+      <button mat-menu-item id="completed" *ngIf="showMoveToCompleted">
+        <mat-icon>assignment_turned_in</mat-icon>
+        <span>Move to completed</span>
       </button>
       <button mat-menu-item id="remove" *ngIf="showRemove">
         <mat-icon>clear</mat-icon>
@@ -39,6 +40,7 @@
   <mat-card-content>
     <ul>
       <li *ngFor="let word of category.cards">{{ word.textOnCard }}</li>
+      <li *ngFor="let pad of numberToPad" class="hidden"></li>
     </ul>
   </mat-card-content>
 </mat-card>

@@ -9,7 +9,7 @@
       cdkDropList
       #completedList="cdkDropList"
       [cdkDropListData]="completed"
-      [cdkDropListConnectedTo]="[plannedList]"
+      [cdkDropListConnectedTo]="['plannedList']"
       cdkDropListOrientation="horizontal"
       class="drop-zone"
       id="completed"
@@ -57,35 +57,12 @@
 
   <div class="space-top">
     <h2>Planned categories</h2>
-    <div
-      cdkDropList
-      #plannedList="cdkDropList"
-      [cdkDropListData]="planned"
-      [cdkDropListConnectedTo]="['currentList', 'completedList']"
-      cdkDropListOrientation="horizontal"
-      class="drop-zone"
-      (cdkDropListDropped)="drop($event)"
-      id="planned"
-    >
-      <div *ngIf="planned.length > 0" fxLayout="row" fxLayoutGap="1em">
-        <app-reading-category
-          fxFlex
-          *ngFor="let c of planned"
-          [category]="c"
-          cdkDrag
-          class="planned"
-          [showMoveToPlanned]="false"
-          (edit)="editCategory($event)"
-        >
-        </app-reading-category>
-      </div>
-    </div>
-
-    <div fxLayout="column" fxLayoutAlign="center center" class="space-top">
-      <button mat-mini-fab matTooltip="Load more planned categories">
-        <mat-icon>expand_more</mat-icon>
-      </button>
-    </div>
+    <app-planned-category-list
+      [categories]="planned"
+      [isLoading]="isLoadingPlanned$ | async"
+      [loadingError]="false"
+      (moveElement)="moveCategory($event)"
+    ></app-planned-category-list>
   </div>
 </div>
 <div

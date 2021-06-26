@@ -27,6 +27,7 @@ describe('ReadingCategoryComponent', () => {
   describe('show actions', () => {
     beforeEach(() => {
       spectator.component.category = {
+        id: 'cars',
         categoryName: 'Cars',
         cards: [
           { textOnCard: 'Volvo' },

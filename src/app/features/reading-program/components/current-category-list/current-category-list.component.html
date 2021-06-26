@@ -1,21 +1,21 @@
 <div
-      cdkDropList
-      #currentList="cdkDropList"
-      [cdkDropListData]="categories"
-      [cdkDropListConnectedTo]="['plannedList', 'completedList']"
-      cdkDropListOrientation="horizontal"
-      class="drop-zone"
-      (cdkDropListDropped)="drop($event)"
-      id="current"
+  cdkDropList
+  #currentList="cdkDropList"
+  [cdkDropListData]="categories"
+  [cdkDropListConnectedTo]="['plannedList', 'completedList']"
+  cdkDropListOrientation="horizontal"
+  class="drop-zone"
+  (cdkDropListDropped)="drop($event)"
+  id="current"
+>
+  <div *ngIf="categories.length > 0" fxLayout="row" fxLayoutGap="1em">
+    <app-reading-category
+      fxFlex
+      *ngFor="let c of categories"
+      [category]="c"
+      [showMoveToCurrent]="false"
+      (edit)="editCategory($event)"
     >
-      <div *ngIf="categories.length > 0" fxLayout="row" fxLayoutGap="1em">
-        <app-reading-category
-          fxFlex
-          *ngFor="let c of categories"
-          [category]="c"
-          [showMoveToCurrent]="false"
-          (edit)="editCategory($event)"
-        >
-        </app-reading-category>
-      </div>
-    </div>
+    </app-reading-category>
+  </div>
+</div>

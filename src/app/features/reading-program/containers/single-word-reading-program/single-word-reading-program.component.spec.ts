@@ -1,3 +1,4 @@
+import { PlannedCategoryListComponent } from './../../components/planned-category-list/planned-category-list.component';
 import { CurrentCategoryListComponent } from './../../components/current-category-list/current-category-list.component';
 import { MatIconModule } from '@angular/material/icon';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -14,13 +15,22 @@ import { SingleWordReadingProgramComponent } from './single-word-reading-program
 describe('SingleWordReadingProgramComponent', () => {
   let spectator: Spectator<SingleWordReadingProgramComponent>;
   let sut: SingleWordReadingProgramComponent;
-  const initialState = {...storeTestHelpers.initialReadingState};
+  const initialState = { ...storeTestHelpers.initialReadingState };
 
   const createComponent = createComponentFactory({
     component: SingleWordReadingProgramComponent,
-    imports: [MatDialogModule, RouterTestingModule, DragDropModule, MatIconModule],
-    declarations: [MockPipe(ListChildrenPipe), MockComponent(CurrentCategoryListComponent)],
-    providers: [provideMockStore({initialState})],
+    imports: [
+      MatDialogModule,
+      RouterTestingModule,
+      DragDropModule,
+      MatIconModule,
+    ],
+    declarations: [
+      MockPipe(ListChildrenPipe),
+      MockComponent(CurrentCategoryListComponent),
+      MockComponent(PlannedCategoryListComponent),
+    ],
+    providers: [provideMockStore({ initialState })],
   });
 
   beforeEach(() => {
