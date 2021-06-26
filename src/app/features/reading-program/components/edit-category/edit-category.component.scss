@@ -1,3 +1,22 @@
-thead td {
-  padding-right: 1em;
+
+table {
+  margin-top: 2em;
+
+  thead td {
+    padding-right: 2em;
+    font-weight: bold;
+
+    .word {
+      font-size: 1.2em;
+    }
+  }
+
+  tr {
+    margin-bottom: 0.5em;
+
+    mat-form-field {
+      margin-right: 2em;
+    }
+  }
+
 }

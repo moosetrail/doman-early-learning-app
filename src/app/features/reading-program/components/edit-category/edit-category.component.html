@@ -6,28 +6,42 @@
 </ng-template>
 
 <mat-dialog-content>
-  <mat-form-field>
-    <mat-label>Category name</mat-label>
-    <input matInput />
-  </mat-form-field>
-  <table>
-    <thead>
-      <td>Word</td>
-      <td *ngFor="let child of children">{{ child.firstName }}</td>
-    </thead>
-    <tr>
-      <td>
-        <mat-form-field>
-          <mat-label></mat-label>
-          <input matInput placeholder="Enter your word" (keyup.enter)="addWord()" />
-        </mat-form-field>
-      </td>
-    </tr>
-  </table>
+  <form>
+    <mat-form-field style="width: 100%">
+      <mat-label>Category name</mat-label>
+      <input matInput [formControl]="categoryName" />
+    </mat-form-field>
+    <table>
+      <thead>
+        <td>Words</td>
+        <td *ngFor="let child of children">{{ child.firstName }}</td>
+      </thead>
+      <tr *ngFor="let word of words">
+        <td>
+          <mat-form-field>
+            <mat-label></mat-label>
+            <input
+              matInput
+              placeholder="Enter your word"
+              (keyup.enter)="addWord()"
+              [formControl]="word"
+            />
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
+  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
-  <button mat-button [mat-dialog-close]="true">Save</button>
+  <div fxLayout="row" class="w-100">
+    <div fxFlex fxLayout="row">
+      <button mat-flat-button (click)="addWord()">Add word</button>
+    </div>
+    <div fxFlex="none" fxLayout="row">
+      <button mat-flat-button mat-dialog-close>Cancel</button>
+      <!-- The mat-dialog-close directive optionally accepts a value as a result for the dialog. -->
+      <button mat-flat-button color="primary" (click)="save()" [disabled]="!categoryName.valid">Save</button>
+    </div>
+  </div>
 </mat-dialog-actions>

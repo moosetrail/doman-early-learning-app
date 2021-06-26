@@ -4,6 +4,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReadingCategory } from '../../models/interfaces/reading-category';
 import { ReadingWord } from '../../models/interfaces/reading-word';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-category',
@@ -15,6 +16,10 @@ export class EditCategoryComponent implements OnInit {
   public isEditMode = false;
   public edit: ReadingCategory<ReadingWord> = {} as ReadingCategory<ReadingWord>;
   public children!: Child[];
+  public categoryName = new FormControl('', Validators.required);
+  public words: FormControl[] = [
+    new FormControl('')
+  ];
 
   constructor(public dialogRef: MatDialogRef<EditCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EditCategoryInfo<ReadingWord>) { }
@@ -28,6 +33,13 @@ export class EditCategoryComponent implements OnInit {
   }
 
   public addWord(){
+    this.words.push(new FormControl(''))
+  }
 
+  public save() {
+    this.dialogRef.close({
+      name: this.categoryName.value,
+      words: this.words.map((w) => w.value).filter(v => v != '')
+    })
   }
 }
