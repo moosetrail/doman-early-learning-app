@@ -32,6 +32,5 @@ describe('ListChildrenPipe', () => {
 
     expect(spy).toHaveBeenCalledTimes(1);
     expect(spy).toHaveBeenCalledWith(children.map(c => c.firstName));
-    expect(spectator.element).toHaveText('children listed');
   });
 });

@@ -1,16 +1,14 @@
-import { TestBed } from '@angular/core/testing';
+import { SpectatorHttp, createHttpFactory } from '@ngneat/spectator';
 
 import { ChildrenApiService } from './children-api.service';
 
 describe('ChildrenApiService', () => {
-  let service: ChildrenApiService;
+  let spectator: SpectatorHttp<ChildrenApiService>;
+  const createService = createHttpFactory(ChildrenApiService);
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ChildrenApiService);
-  });
+  beforeEach(() => (spectator = createService()));
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('can be created', () => {
+    expect(spectator.service);
   });
 });

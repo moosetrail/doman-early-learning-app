@@ -1,16 +1,14 @@
-import { TestBed } from '@angular/core/testing';
+import { createHttpFactory, SpectatorHttp } from '@ngneat/spectator';
 
 import { ReadingProgramApiService } from './reading-program-api.service';
 
 describe('ReadingProgramApiService', () => {
-  let service: ReadingProgramApiService;
+  let spectator: SpectatorHttp<ReadingProgramApiService>;
+  const createService = createHttpFactory(ReadingProgramApiService);
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(ReadingProgramApiService);
-  });
+  beforeEach(() => (spectator = createService()));
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  it('can be created', () => {
+    expect(spectator.service);
   });
 });

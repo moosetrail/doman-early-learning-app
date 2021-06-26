@@ -1,25 +1,23 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { Spectator, createComponentFactory } from '@ngneat/spectator';
 
 import { CurrentCategoryListComponent } from './current-category-list.component';
 
 describe('CurrentCategoryListComponent', () => {
-  let component: CurrentCategoryListComponent;
-  let fixture: ComponentFixture<CurrentCategoryListComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ CurrentCategoryListComponent ]
-    })
-    .compileComponents();
+  let spectator: Spectator<CurrentCategoryListComponent>;
+  let sut: CurrentCategoryListComponent;
+  const createComponent = createComponentFactory({
+    component: CurrentCategoryListComponent,
+    imports: [DragDropModule],
+    providers: [],
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentCategoryListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent();
+    sut = spectator.component;
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator).toBeTruthy();
   });
 });

@@ -1,25 +1,34 @@
-import { TestBed } from '@angular/core/testing';
+import { ChildrenApiService } from './../services/children-api.service';
+import { SpectatorService, createServiceFactory, mockProvider } from '@ngneat/spectator';
 import { provideMockActions } from '@ngrx/effects/testing';
+import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs';
-
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { TestScheduler } from 'rxjs/testing';
 import { LoadChildrenEffects } from './load-children.effects';
 
 describe('LoadChildrenEffects', () => {
-  let actions$: Observable<any>;
-  let effects: LoadChildrenEffects;
+  let actions$: Observable<Action>;
+  let spectator: SpectatorService<LoadChildrenEffects>;
+  let scheduler: TestScheduler;
+  let sut: LoadChildrenEffects;
+  let store: MockStore;
+
+  const createService = createServiceFactory({
+    service: LoadChildrenEffects,
+    providers: [provideMockActions(() => actions$), provideMockStore(), mockProvider(ChildrenApiService)],
+  });
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [
-        LoadChildrenEffects,
-        provideMockActions(() => actions$)
-      ]
+    spectator = createService();
+    sut = spectator.service;
+    scheduler = new TestScheduler((actual, expected) => {
+      expect(actual).toEqual(expected);
     });
-
-    effects = TestBed.inject(LoadChildrenEffects);
+    store = spectator.inject(MockStore);
   });
 
   it('should be created', () => {
-    expect(effects).toBeTruthy();
+    expect(spectator.service).toBeTruthy();
   });
 });
