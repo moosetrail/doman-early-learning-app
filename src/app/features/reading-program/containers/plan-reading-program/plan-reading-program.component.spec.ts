@@ -1,3 +1,4 @@
+import { RouterTestingModule } from '@angular/router/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlanReadingProgramComponent } from './plan-reading-program.component';
@@ -8,7 +9,8 @@ describe('PlanReadingProgramComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PlanReadingProgramComponent ]
+      declarations: [ PlanReadingProgramComponent ],
+      imports: [RouterTestingModule]
     })
     .compileComponents();
   });

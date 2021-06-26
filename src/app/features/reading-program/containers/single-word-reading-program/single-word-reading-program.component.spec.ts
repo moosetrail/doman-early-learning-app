@@ -1,6 +1,8 @@
+import { CurrentCategoryListComponent } from './../../components/current-category-list/current-category-list.component';
+import { MatIconModule } from '@angular/material/icon';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ListChildrenPipe } from './../../../../shared/pipes/list-children.pipe';
-import { MockPipe } from 'ng-mocks';
+import { MockPipe, MockComponent } from 'ng-mocks';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -16,8 +18,8 @@ describe('SingleWordReadingProgramComponent', () => {
 
   const createComponent = createComponentFactory({
     component: SingleWordReadingProgramComponent,
-    imports: [MatDialogModule, RouterTestingModule, DragDropModule],
-    declarations: [MockPipe(ListChildrenPipe)],
+    imports: [MatDialogModule, RouterTestingModule, DragDropModule, MatIconModule],
+    declarations: [MockPipe(ListChildrenPipe), MockComponent(CurrentCategoryListComponent)],
     providers: [provideMockStore({initialState})],
   });
 

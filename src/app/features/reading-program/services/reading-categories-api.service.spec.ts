@@ -9,6 +9,6 @@ describe('ReadingCategoriesApiService', () => {
   beforeEach(() => (spectator = createService()));
 
   it('can be created', () => {
-    expect(spectator.service);
+    expect(spectator.service).not.toBeNull();
   });
 });
