@@ -5,6 +5,16 @@ export const loadSingleWordReadingProgramComponents = createAction(
   props<{programId: string}>()
 );
 
+export const loadCompletedCategories = createAction(
+  '[SingleWordReadingProgramComponent] Load completed categories',
+  props<{programId: string}>()
+);
+
+export const loadPlannedCategories = createAction(
+  '[SingleWordReadingProgramComponent] Load planned categories',
+  props<{programId: string}>()
+);
+
 export const addNewCategory = createAction(
   '[SingleWordReadingProgramComponent] Add new category',
   props<{name: string, words: string[], programId: string}>()
@@ -13,6 +23,11 @@ export const addNewCategory = createAction(
 export const moveCategory = createAction(
   '[SingleWordReadingProgramComponent] Move category',
   props<{fromList: string | null, toList: string | null, previousIndex: number, newIndex: number, programId: string }>()
+);
+
+export const moveCategoryToPlanned = createAction(
+  '[SingleWordReadingProgramComponent] Move category to planned',
+  props<{programId: string, categoryId: string}>()
 );
 
 export const moveCategoryToCurrent = createAction(

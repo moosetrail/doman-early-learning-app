@@ -5,69 +5,60 @@
   </h1>
 
   <div class="space-top">
-    <div
-      cdkDropList
-      #completedList="cdkDropList"
-      [cdkDropListData]="completed"
-      [cdkDropListConnectedTo]="['plannedList']"
-      cdkDropListOrientation="horizontal"
-      class="drop-zone"
-      id="completed"
-      (cdkDropListDropped)="drop($event)"
-    >
-      <ng-container *ngIf="showCompleted; else noCompleted">
-        <h2>Completed categories</h2>
-        <div fxLayout="column" fxLayoutAlign="center center" class="space-down">
-          <button mat-mini-fab matTooltip="Load more completed categories">
-            <mat-icon>expand_less</mat-icon>
-          </button>
-        </div>
+    <ng-container *ngIf="showCompleted; else noCompleted">
+      <h2>Completed categories</h2>
 
-        <div *ngIf="completed.length > 0" fxLayout="row" fxLayoutGap="1em">
-          <app-reading-category
-            fxFlex
-            *ngFor="let c of completed"
-            [category]="c"
-            class="completed"
-            [showMoveToPlanned]="false"
-            [showMoveToCurrent]="false"
-            [showMoveToCompleted]="false"
-            [showEdit]="false"
-            [showRemove]="false"
-          >
-          </app-reading-category>
-        </div>
-      </ng-container>
-      <ng-template #noCompleted>
-        <button
-          mat-button
-          style="float: right"
-          (click)="showCompletedCategories()"
-        >
-          Show completed categories
-        </button>
-      </ng-template>
-    </div>
+      <app-category-list
+        [categories]="completed$ | async"
+        [isLoading]="isLoadingCompleted$ | async"
+        [loadingError]="loadingCompletedError$ | async"
+        [categoryType]="categoryTypes.Completed"
+        (moveToPlanned)="moveToPlanned($event)"
+        (moveToCurrent)="moveToCompleted($event)"
+        (viewStatistics)="viewStats($event)"
+        (loadMore)="loadMoreCompleted()"
+      ></app-category-list>
+    </ng-container>
+    <ng-template #noCompleted>
+      <button
+        mat-button
+        style="float: right"
+        (click)="showCompletedCategories()"
+      >
+        Show completed categories
+      </button>
+    </ng-template>
   </div>
 
   <div class="current-categories space-top-xl space-bottom">
     <h2>Current categories</h2>
-    <app-current-category-list></app-current-category-list>
+    <app-category-list
+      [categories]="current$ | async"
+      [isLoading]="isLoadingCurrent$ | async"
+      [loadingError]="loadingCurrentError$ | async"
+      [categoryType]="categoryTypes.Current"
+      (edit)="editCategory($event)"
+      (moveToPlanned)="moveToPlanned($event)"
+      (moveToCompleted)="moveToCompleted($event)"
+      (remove)="remove($event)"
+      (viewStatistics)="viewStats($event)"
+    ></app-category-list>
   </div>
 
   <div class="space-top">
     <h2>Planned categories</h2>
-    <app-planned-category-list
-      [categories]="planned"
+    <app-category-list
+      [categories]="planned$ | async"
       [isLoading]="isLoadingPlanned$ | async"
-      [loadingError]="false"
-      (moveElement)="moveCategory($event)"
+      [loadingError]="loadingPlannedError$ | async"
+      [categoryType]="categoryTypes.Planned"
       (edit)="editCategory($event)"
       (moveToCurrent)="moveToCurrent($event)"
       (moveToCompleted)="moveToCompleted($event)"
       (remove)="remove($event)"
       (viewStatistics)="viewStats($event)"
-    ></app-planned-category-list>
+      (loadMore)="loadMorePlanned()"
+    ></app-category-list>
   </div>
 </div>
 <div

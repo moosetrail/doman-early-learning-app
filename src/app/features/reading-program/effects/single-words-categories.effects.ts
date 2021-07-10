@@ -64,6 +64,28 @@ export class SingleWordsCategoriesEffects {
     )
   );
 
+  loadCompleted$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromSingleWordReadingProgramComponent.loadCompletedCategories),
+      mergeMap((action) =>
+        this.api.getRetired(action.programId, 10, 0).pipe(
+          map((result) =>
+            actions.loadCompletedCategoriesFromApiSuccess({
+              data: result.map((dto) =>
+                this.mapSingleWordReadingCategoryDtoToReadingCategory(dto)
+              ),
+              limit: 10,
+              offset: 0,
+            })
+          ),
+          catchError((error) =>
+            of(actions.loadCompletedCategoriesFromInApiFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
   addNewCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromSingleWordReadingProgramComponent.addNewCategory),

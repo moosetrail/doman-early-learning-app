@@ -1,4 +1,4 @@
-import { PlannedCategoryListComponent } from './../../components/planned-category-list/planned-category-list.component';
+import { CategoryListComponent } from './../../components/category-list/category-list.component';
 import { CurrentCategoryListComponent } from './../../components/current-category-list/current-category-list.component';
 import { MatIconModule } from '@angular/material/icon';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -28,7 +28,7 @@ describe('SingleWordReadingProgramComponent', () => {
     declarations: [
       MockPipe(ListChildrenPipe),
       MockComponent(CurrentCategoryListComponent),
-      MockComponent(PlannedCategoryListComponent),
+      MockComponent(CategoryListComponent),
     ],
     providers: [provideMockStore({ initialState })],
   });

@@ -1,3 +1,4 @@
+import { CategoryListType } from './../../components/category-list/category-list-type';
 import { ReadingCard } from './../../models/interfaces/reading-card';
 import { EditCategoryInfo } from './../../models/interfaces/edit-category-info';
 import { EditCategoryComponent } from './../../components/edit-category/edit-category.component';
@@ -8,11 +9,7 @@ import { Observable, Subject } from 'rxjs';
 import { ReadingCategory } from '../../models/interfaces/reading-category';
 import { ReadingWord } from '../../models/interfaces/reading-word';
 import { OnDestroy } from '@angular/core';
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import * as actions from '../../actions/single-word-reading-program-component.actions';
 import * as fromReadingCategories from '../../selectors/reading-categories.selectors';
 import { take, takeUntil } from 'rxjs/operators';
@@ -28,12 +25,35 @@ import { Child } from 'src/app/shared/models/interfaces/child';
 export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
   public showCompleted = false;
   public childrenOnProgram$: Observable<Child[]> | null = null;
-  public completed: ReadingCategory<ReadingWord>[] = [];
-  public current: ReadingCategory<ReadingWord>[] = [];
-  public planned: ReadingCategory<ReadingWord>[] = [];
+  public completed$ = this.store.select(
+    fromReadingCategories.completedCategories
+  );
+  public isLoadingCompleted$ = this.store.select(
+    fromReadingCategories.isLoadingCurrentCategories
+  );
+  public loadingCompletedError$ = this.store.select(
+    fromReadingCategories.errorLoadingCurrentCategories
+  );
+
+  public current$ = this.store.select(fromReadingCategories.currentCategories);
+  public isLoadingCurrent$ = this.store.select(
+    fromReadingCategories.isLoadingCurrentCategories
+  );
+  public loadingCurrentError$ = this.store.select(
+    fromReadingCategories.errorLoadingCurrentCategories
+  );
+
+  public planned$ = this.store.select(
+    fromReadingCategories.plannedWordCategories
+  );
   public isLoadingPlanned$ = this.store.select(
     fromReadingCategories.isLoadingPlannedCategories
   );
+  public loadingPlannedError$ = this.store.select(
+    fromReadingCategories.errorLoadingPlannedCategories
+  );
+
+  public categoryTypes = CategoryListType;
   private unsubscribe$ = new Subject<void>();
   private programId!: string;
 
@@ -44,7 +64,7 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntil(this.unsubscribe$)).subscribe((params) => {
       this.programId = params.programId;
       this.store.dispatch(
         actions.loadSingleWordReadingProgramComponents({
@@ -55,27 +75,6 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
         fromReadingProgram.childrenOnProgram(this.programId)
       );
     });
-
-    this.store
-      .select(fromReadingCategories.currentCategories)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((categories) => {
-        this.current = categories;
-      });
-
-    this.store
-      .select(fromReadingCategories.plannedWordCategories)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((categories) => {
-        this.planned = categories;
-      });
-
-    this.store
-      .select(fromReadingCategories.completedCategories)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((categories) => {
-        this.completed = categories;
-      });
   }
 
   ngOnDestroy() {
@@ -85,28 +84,9 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
 
   public showCompletedCategories(): void {
     this.showCompleted = true;
-  }
-
-  public drop(event: CdkDragDrop<ReadingCategory<ReadingWord>[] | any>): void {
-    if (event.container.data == null || event.previousContainer.data == null) {
-      return;
-    }
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      // Dispatch event to move in same list but move index if list is planned
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-      // Dispatch event to move category to new list
-    }
+    this.store.dispatch(
+      actions.loadCompletedCategories({ programId: this.programId })
+    );
   }
 
   public editCategory(category: ReadingCategory<ReadingCard> | null): void {
@@ -135,33 +115,67 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
   public moveCategory(
     event: CdkDragDrop<ReadingCategory<ReadingWord>[] | any>
   ): void {
-
     this.store.dispatch(
       actions.moveCategory({
         previousIndex: event.previousIndex,
         newIndex: event.currentIndex,
         fromList: event.previousContainer.id,
         toList: event.container.id,
-        programId: this.programId
+        programId: this.programId,
       })
     );
-
-    console.info('move category');
   }
 
   public moveToCurrent(category: ReadingCategory<ReadingCard>): void {
-    this.store.dispatch(actions.moveCategoryToCurrent({programId: this.programId, categoryId: category.id}));
+    this.store.dispatch(
+      actions.moveCategoryToCurrent({
+        programId: this.programId,
+        categoryId: category.id,
+      })
+    );
   }
 
   public moveToCompleted(category: ReadingCategory<ReadingCard>): void {
-    this.store.dispatch(actions.moveCategoryToCompleted({programId: this.programId, categoryId: category.id}));
+    this.store.dispatch(
+      actions.moveCategoryToCompleted({
+        programId: this.programId,
+        categoryId: category.id,
+      })
+    );
   }
 
   public remove(category: ReadingCategory<ReadingCard>): void {
-    this.store.dispatch(actions.removeCategory({programId: this.programId, categoryId: category.id}));
+    this.store.dispatch(
+      actions.removeCategory({
+        programId: this.programId,
+        categoryId: category.id,
+      })
+    );
   }
 
   public viewStats(category: ReadingCategory<ReadingCard>): void {
-    this.store.dispatch(actions.loadCategoryStatistics({programId: this.programId, categoryId: category.id}));
+    this.store.dispatch(
+      actions.loadCategoryStatistics({
+        programId: this.programId,
+        categoryId: category.id,
+      })
+    );
+  }
+
+  public moveToPlanned(category: ReadingCategory<ReadingCard>): void {
+    this.store.dispatch(
+      actions.moveCategoryToPlanned({
+        programId: this.programId,
+        categoryId: category.id,
+      })
+    );
+  }
+
+  public loadMorePlanned(): void {
+    this.store.dispatch(actions.loadPlannedCategories({programId: this.programId}));
+  }
+
+  public loadMoreCompleted(): void {
+    this.store.dispatch(actions.loadCompletedCategories({programId: this.programId}));
   }
 }

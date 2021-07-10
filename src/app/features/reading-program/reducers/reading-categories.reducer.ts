@@ -14,8 +14,10 @@ export interface ReadingCategoriesState {
   currentCategories: ReadingCategory<ReadingWord | ReadingSentence>[];
   loadingCurrent: boolean;
   loadingCurrentError: HttpErrorResponse | null;
-  loadingPlanned: boolean,
+  loadingPlanned: boolean;
   loadingPlannedError: HttpErrorResponse | null;
+  loadingCompleted: boolean;
+  loadingCompletedError: HttpErrorResponse | null;
 
   plannedCategories: ReadingCategory<ReadingWord | ReadingSentence>[];
 }
@@ -28,7 +30,9 @@ export const initialState: ReadingCategoriesState = {
   loadingCurrentError: null,
   plannedCategories: [],
   loadingPlanned: false,
-  loadingPlannedError: null
+  loadingPlannedError: null,
+  loadingCompleted: false,
+  loadingCompletedError: null,
 };
 
 export const reducer = createReducer(
@@ -41,63 +45,90 @@ export const reducer = createReducer(
           ...initialState,
           programId: payload.programId,
           loadingCurrent: true,
-          loadingPlanned: true
+          loadingPlanned: true,
         };
       } else {
         return { ...state, loadingCurrent: true, loadingPlanned: true };
       }
     }
   ),
+  on(
+    fromSingleWordReadingProgramComponent.loadCompletedCategories,
+    (state) => ({
+      ...state,
+      loadingCompleted: true,
+      loadingCompletedError: null,
+    })
+  ),
   on(fromSingleWordReadingProgramComponent.moveCategory, (state, payload) => {
-
-    if(payload.fromList == payload.toList){
+    if (payload.fromList == payload.toList) {
       let planned = [...state.plannedCategories];
       const toMove = removeFromList(planned, payload.previousIndex);
 
       planned.splice(payload.newIndex, 0, toMove);
-      return {...state, plannedCategories: planned};
+      return { ...state, plannedCategories: planned };
     }
 
-    return {...state};
+    return { ...state };
   }),
-  on(fromSingleWordReadingProgramComponent.moveCategoryToCurrent, (state, payload) => {
-    let categoryIndex = state.plannedCategories.findIndex(x => x.id == payload.categoryId);
+  on(
+    fromSingleWordReadingProgramComponent.moveCategoryToCurrent,
+    (state, payload) => {
+      let categoryIndex = state.plannedCategories.findIndex(
+        (x) => x.id == payload.categoryId
+      );
 
-    if(categoryIndex >= 0){
-      let planned = [...state.plannedCategories];
-      const toMove = removeFromList(planned, categoryIndex);
+      if (categoryIndex >= 0) {
+        let planned = [...state.plannedCategories];
+        const toMove = removeFromList(planned, categoryIndex);
 
-      let current = [... state.currentCategories];
-      current.push(toMove);
-      return {...state, plannedCategories: planned, currentCategories: current}
+        let current = [...state.currentCategories];
+        current.push(toMove);
+        return {
+          ...state,
+          plannedCategories: planned,
+          currentCategories: current,
+        };
+      }
+
+      return { ...state };
     }
+  ),
+  on(
+    fromSingleWordReadingProgramComponent.moveCategoryToCompleted,
+    (state, payload) => {
+      let categoryIndex = state.plannedCategories.findIndex(
+        (x) => x.id == payload.categoryId
+      );
 
-    return {...state};
-  }),
-  on(fromSingleWordReadingProgramComponent.moveCategoryToCompleted, (state, payload) => {
-    let categoryIndex = state.plannedCategories.findIndex(x => x.id == payload.categoryId);
+      if (categoryIndex >= 0) {
+        let planned = [...state.plannedCategories];
+        const toMove = removeFromList(planned, categoryIndex);
 
-    if(categoryIndex >= 0){
-      let planned = [...state.plannedCategories];
-      const toMove = removeFromList(planned, categoryIndex);
+        let completed = [...state.completedCategories];
+        completed.push(toMove);
+        return {
+          ...state,
+          plannedCategories: planned,
+          completedCategories: completed,
+        };
+      }
 
-      let completed = [... state.completedCategories];
-      completed.push(toMove);
-      return {...state, plannedCategories: planned, completedCategories: completed}
+      return { ...state };
     }
-
-    return {...state};
-  }),
+  ),
   on(fromSingleWordReadingProgramComponent.removeCategory, (state, payload) => {
-    let categoryIndex = state.plannedCategories.findIndex(x => x.id == payload.categoryId);
-    if(categoryIndex >= 0){
+    let categoryIndex = state.plannedCategories.findIndex(
+      (x) => x.id == payload.categoryId
+    );
+    if (categoryIndex >= 0) {
       let planned = [...state.plannedCategories];
       removeFromList(planned, categoryIndex);
 
-      return {...state, plannedCategories: planned}
+      return { ...state, plannedCategories: planned };
     }
 
-    return {...state};
+    return { ...state };
   }),
   on(
     fromSingleWordCategoriesEffects.loadSCurrentCategoriesFromApiSuccess,
@@ -115,11 +146,14 @@ export const reducer = createReducer(
       loadingCurrentError: payload.error,
     })
   ),
-  on(fromSingleWordCategoriesEffects.loadPlannedCategoriesFromApiSuccess, (state, payload) =>  ({
-    ...state,
-    plannedCategories: payload.data,
-    loadingPlanned: false,
-  })),
+  on(
+    fromSingleWordCategoriesEffects.loadPlannedCategoriesFromApiSuccess,
+    (state, payload) => ({
+      ...state,
+      plannedCategories: payload.data,
+      loadingPlanned: false,
+    })
+  ),
   on(
     fromSingleWordCategoriesEffects.loadPlannedCategoriesFromApiFailure,
     (state, payload) => ({
@@ -128,11 +162,35 @@ export const reducer = createReducer(
       loadingPlannedError: payload.error,
     })
   ),
+  on(
+    fromSingleWordCategoriesEffects.loadCompletedCategoriesFromApiSuccess,
+    (state, payload) => {
+      let completed = [...state.completedCategories];
+      completed.splice(payload.offset, payload.limit);
+      completed.splice(payload.offset, 0, ...payload.data);
+
+      return {
+        ...state,
+        completedCategories: completed,
+        loadingCompleted: false,
+      };
+    }
+  ),
+  on(
+    fromSingleWordCategoriesEffects.loadCompletedCategoriesFromInApiFailure,
+    (state, payload) => ({
+      ...state,
+      loadingCompleted: false,
+      loadingCompletedError: payload.error,
+    })
+  )
 );
 
-function removeFromList(planned: ReadingCategory<ReadingWord | ReadingSentence>[], categoryIndex: number) {
+function removeFromList(
+  planned: ReadingCategory<ReadingWord | ReadingSentence>[],
+  categoryIndex: number
+) {
   const toMove = planned[categoryIndex];
   planned.splice(categoryIndex, 1);
   return toMove;
 }
-

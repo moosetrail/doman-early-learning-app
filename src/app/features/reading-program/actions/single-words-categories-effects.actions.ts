@@ -27,6 +27,20 @@ export const loadPlannedCategoriesFromApiFailure = createAction(
   props<{ error: HttpErrorResponse }>()
 );
 
+export const loadCompletedCategoriesFromApiSuccess = createAction(
+  '[SingleWordsCategoriesEffects] Load Completed Categories from API Success',
+  props<{
+    data: ReadingCategory<ReadingWord>[];
+    limit: number;
+    offset: number;
+  }>()
+);
+
+export const loadCompletedCategoriesFromInApiFailure = createAction(
+  '[SingleWordsCategoriesEffects] Load Completed Categories from API Failure',
+  props<{ error: HttpErrorResponse }>()
+);
+
 export const addNewCategoriesToApiSuccess = createAction(
   '[SingleWordsCategoriesEffects] Add new category to API Success',
   props<{ data: ReadingCategory<ReadingWord> }>()

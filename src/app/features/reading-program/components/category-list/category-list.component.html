@@ -1,1 +1,79 @@
-<p>category-list works!</p>
+<div *ngIf="showPrimary">
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    class="space-top"
+    *ngIf="categoryType === categoryTypes.Completed"
+  >
+    <button
+      mat-mini-fab
+      matTooltip="Load older completed categories"
+      (click)="loadMore.emit()"
+    >
+      <mat-icon>expand_less</mat-icon>
+    </button>
+  </div>
+  <div
+    cdkDropList
+    #plannedList="cdkDropList"
+    [cdkDropListData]="categories"
+    [cdkDropListConnectedTo]="otherDropZones"
+    cdkDropListOrientation="horizontal"
+    class="drop-zone"
+    (cdkDropListDropped)="drop($event)"
+    id="{{ dropZoneName }}"
+  >
+    <div
+      *ngIf="categories !== null && categories.length > 0"
+      fxLayout="row"
+      fxLayoutGap="1em"
+    >
+      <app-reading-category
+        fxFlex
+        *ngFor="let c of categories"
+        [category]="c"
+        cdkDrag
+        [showMoveToPlanned]="showMoveToPlanned"
+        [showMoveToCurrent]="showMoveToCurrent"
+        [showMoveToCompleted]="showMoveToCompleted"
+        [showRemove]="showRemove"
+        [showEdit]="showEdit"
+        (edit)="edit.emit(c)"
+        (moveToCurrent)="moveToCurrent.emit(c)"
+        (moveToCompleted)="moveToCompleted.emit(c)"
+        (remove)="remove.emit(c)"
+        (statistics)="viewStatistics.emit(c)"
+        (moveToPlanned)="moveToPlanned.emit(c)"
+        [ngClass]="{ movable: categoryType === categoryTypes.Planned }"
+      >
+      </app-reading-category>
+    </div>
+  </div>
+  <div
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    class="space-top"
+    *ngIf="categoryType === categoryTypes.Planned"
+  >
+    <button
+      mat-mini-fab
+      matTooltip="Load more planned categories"
+      (click)="loadMore.emit()"
+    >
+      <mat-icon>expand_more</mat-icon>
+    </button>
+  </div>
+</div>
+<div>
+  <p class="text-center" *ngIf="showNoCategories">
+    This plan doesn't contain any {{ categoryTypeName }} categories yet
+  </p>
+</div>
+<div class="text-center" *ngIf="loadingError">
+  <h3>An error occurred</h3>
+  <p>
+    Unfortunately something went wrong while loading the
+    {{ categoryTypeName }} categories.
+  </p>
+</div>
+<app-loader *ngIf="isLoading">Loading {{ categoryTypeName }} categories</app-loader>

@@ -14,8 +14,18 @@ const categoriesState = createSelector(
 );
 
 export const currentCategories = createSelector(
-  schoolCourseState,
-  (state) => []
+  categoriesState,
+  (state) => state.currentCategories
+);
+
+export const isLoadingCurrentCategories = createSelector(
+  categoriesState,
+  (state) => state.loadingCurrent
+);
+
+export const errorLoadingCurrentCategories = createSelector(
+  categoriesState,
+  (state) => state.loadingCurrentError != null
 );
 
 export const plannedWordCategories = createSelector(
@@ -48,6 +58,16 @@ export const plannedCategoryAtIndex = (index: number) =>
   createSelector(categoriesState, (state) => state.plannedCategories[index]);
 
 export const completedCategories = createSelector(
-  schoolCourseState,
-  (state) => []
+  categoriesState,
+  (state) => state.completedCategories
+);
+
+export const isLoadingCompletedCategories = createSelector(
+  categoriesState,
+  (state) => state.loadingCompleted
+);
+
+export const errorLoadingCompletedCategories = createSelector(
+  categoriesState,
+  (state) => state.loadingCompletedError != null
 );
