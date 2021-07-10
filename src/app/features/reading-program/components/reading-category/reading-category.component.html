@@ -11,27 +11,27 @@
     </button>
     <mat-menu #menu="matMenu">
 
-      <button mat-menu-item id="current" *ngIf="showMoveToCurrent">
+      <button mat-menu-item id="current" *ngIf="showMoveToCurrent" (click)="moveToCurrent.emit()">
         <mat-icon>today</mat-icon>
         <span>Move to current</span>
       </button>
-      <button mat-menu-item id="planned" *ngIf="showMoveToPlanned">
+      <button mat-menu-item id="planned" *ngIf="showMoveToPlanned" (click)="moveToPlanned.emit()">
         <mat-icon>calendar_today</mat-icon>
         <span>Move to planned</span>
       </button>
-      <button mat-menu-item id="completed" *ngIf="showMoveToCompleted">
+      <button mat-menu-item id="completed" *ngIf="showMoveToCompleted" (click)="moveToCompleted.emit()">
         <mat-icon>assignment_turned_in</mat-icon>
         <span>Move to completed</span>
       </button>
-      <button mat-menu-item id="remove" *ngIf="showRemove">
+      <button mat-menu-item id="remove" *ngIf="showRemove" (click)="remove.emit()">
         <mat-icon>clear</mat-icon>
         <span>Remove from plan</span>
       </button>
-      <button mat-menu-item id="statistics" *ngIf="showStatistics">
+      <button mat-menu-item id="statistics" *ngIf="showStatistics" (click)="statistics.emit()">
         <mat-icon>insights</mat-icon>
         <span>View statistics</span>
       </button>
-      <button mat-menu-item id="edit" *ngIf="showEdit" (click)=clickEdit()>
+      <button mat-menu-item id="edit" *ngIf="showEdit" (click)="edit.emit()">
         <mat-icon>edit</mat-icon>
         <span>Edit category</span>
       </button>

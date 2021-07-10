@@ -16,7 +16,11 @@
         [category]="c"
         cdkDrag
         [showMoveToPlanned]="false"
-        (edit)="editCategory($event)"
+        (edit)="edit.emit(c)"
+        (moveToCurrent)="moveToCurrent.emit(c)"
+        (moveToCompleted)="moveToCompleted.emit(c)"
+        (remove)="remove.emit(c)"
+        (statistics)="viewStatistics.emit(c)"
       >
       </app-reading-category>
     </div>

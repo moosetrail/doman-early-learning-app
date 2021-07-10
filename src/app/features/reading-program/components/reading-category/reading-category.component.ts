@@ -1,3 +1,4 @@
+import { ReadingCard } from './../../models/interfaces/reading-card';
 import { ReadingCategory } from './../../models/interfaces/reading-category';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
@@ -7,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./reading-category.component.scss'],
 })
 export class ReadingCategoryComponent implements OnInit {
-  @Input() category: ReadingCategory<any> | null = null;
+  @Input() category: ReadingCategory<ReadingCard> | null = null;
   @Input() showMoveToCompleted = true;
   @Input() showMoveToPlanned = true;
   @Input() showMoveToCurrent = true;
@@ -15,7 +16,12 @@ export class ReadingCategoryComponent implements OnInit {
   @Input() showStatistics = true;
   @Input() showEdit = true;
 
-  @Output() edit = new EventEmitter<ReadingCategory<any>>();
+  @Output() edit = new EventEmitter();
+  @Output() moveToCurrent = new EventEmitter();
+  @Output() moveToCompleted = new EventEmitter();
+  @Output() moveToPlanned = new EventEmitter();
+  @Output() remove = new EventEmitter();
+  @Output() statistics = new EventEmitter();
 
   public numberToPad: boolean[] = [];
 
@@ -27,12 +33,6 @@ export class ReadingCategoryComponent implements OnInit {
      for (let i = 0; i < nbrToPad; i++) {
        this.numberToPad[i] = true;
      }
-    }
-  }
-
-  clickEdit(): void {
-    if (this.category != null) {
-      this.edit.emit(this.category);
     }
   }
 }

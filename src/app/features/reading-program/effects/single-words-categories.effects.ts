@@ -1,3 +1,4 @@
+import { ReadingStatusDTO } from './../models/dtos/reading-unit-status-dto';
 import { Store } from '@ngrx/store';
 import { ReadingWord } from './../models/interfaces/reading-word';
 import { ReadingCategory } from './../models/interfaces/reading-category';
@@ -113,6 +114,110 @@ export class SingleWordsCategoriesEffects {
               )
             )
           )
+      )
+    )
+  );
+
+  moveToCurrent$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromSingleWordReadingProgramComponent.moveCategoryToCurrent),
+      mergeMap((action) =>
+        this.api
+          .changeStatus(
+            action.programId,
+            action.categoryId,
+            ReadingStatusDTO.active
+          )
+          .pipe(
+            map(() =>
+              actions.moveCategoryToCurrentInApiSuccess({
+                categoryId: action.categoryId,
+              })
+            ),
+            catchError((error) =>
+              of(
+                actions.moveCategoryToCurrentInInApiFailure({
+                  error,
+                  categoryId: action.categoryId,
+                })
+              )
+            )
+          )
+      )
+    )
+  );
+
+  moveToCompleted$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromSingleWordReadingProgramComponent.moveCategoryToCompleted),
+      mergeMap((action) =>
+        this.api
+          .changeStatus(
+            action.programId,
+            action.categoryId,
+            ReadingStatusDTO.retired
+          )
+          .pipe(
+            map(() =>
+              actions.moveCategoryToCompletedInApiSuccess({
+                categoryId: action.categoryId,
+              })
+            ),
+            catchError((error) =>
+              of(
+                actions.moveCategoryToCompletedInInApiFailure({
+                  error,
+                  categoryId: action.categoryId,
+                })
+              )
+            )
+          )
+      )
+    )
+  );
+
+  removeCategory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromSingleWordReadingProgramComponent.removeCategory),
+      mergeMap((action) =>
+        this.api.removeCategory(action.programId, action.categoryId).pipe(
+          map(() =>
+            actions.removeCategoryFromApiSuccess({
+              categoryId: action.categoryId,
+            })
+          ),
+          catchError((error) =>
+            of(
+              actions.removeCategoryFromInApiFailure({
+                error,
+                categoryId: action.categoryId,
+              })
+            )
+          )
+        )
+      )
+    )
+  );
+
+  loadStatistics$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromSingleWordReadingProgramComponent.loadCategoryStatistics),
+      mergeMap((action) =>
+        this.api.loadStatistics(action.programId, action.categoryId).pipe(
+          map(() =>
+            actions.loadCategoryStatisticsFromApiSuccess({
+              categoryId: action.categoryId,
+            })
+          ),
+          catchError((error) =>
+            of(
+              actions.loadCategoryStatisticsFromInApiFailure({
+                error,
+                categoryId: action.categoryId,
+              })
+            )
+          )
+        )
       )
     )
   );

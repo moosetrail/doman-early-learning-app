@@ -52,13 +52,52 @@ export const reducer = createReducer(
 
     if(payload.fromList == payload.toList){
       let planned = [...state.plannedCategories];
-      const toMove = planned[payload.previousIndex];
-      planned.splice(payload.previousIndex, 1);
+      const toMove = removeFromList(planned, payload.previousIndex);
+
       planned.splice(payload.newIndex, 0, toMove);
+      return {...state, plannedCategories: planned};
+    }
+
+    return {...state};
+  }),
+  on(fromSingleWordReadingProgramComponent.moveCategoryToCurrent, (state, payload) => {
+    let categoryIndex = state.plannedCategories.findIndex(x => x.id == payload.categoryId);
+
+    if(categoryIndex >= 0){
+      let planned = [...state.plannedCategories];
+      const toMove = removeFromList(planned, categoryIndex);
+
+      let current = [... state.currentCategories];
+      current.push(toMove);
+      return {...state, plannedCategories: planned, currentCategories: current}
+    }
+
+    return {...state};
+  }),
+  on(fromSingleWordReadingProgramComponent.moveCategoryToCompleted, (state, payload) => {
+    let categoryIndex = state.plannedCategories.findIndex(x => x.id == payload.categoryId);
+
+    if(categoryIndex >= 0){
+      let planned = [...state.plannedCategories];
+      const toMove = removeFromList(planned, categoryIndex);
+
+      let completed = [... state.completedCategories];
+      completed.push(toMove);
+      return {...state, plannedCategories: planned, completedCategories: completed}
+    }
+
+    return {...state};
+  }),
+  on(fromSingleWordReadingProgramComponent.removeCategory, (state, payload) => {
+    let categoryIndex = state.plannedCategories.findIndex(x => x.id == payload.categoryId);
+    if(categoryIndex >= 0){
+      let planned = [...state.plannedCategories];
+      removeFromList(planned, categoryIndex);
+
       return {...state, plannedCategories: planned}
     }
 
-    return {...state}
+    return {...state};
   }),
   on(
     fromSingleWordCategoriesEffects.loadSCurrentCategoriesFromApiSuccess,
@@ -90,3 +129,10 @@ export const reducer = createReducer(
     })
   ),
 );
+
+function removeFromList(planned: ReadingCategory<ReadingWord | ReadingSentence>[], categoryIndex: number) {
+  const toMove = planned[categoryIndex];
+  planned.splice(categoryIndex, 1);
+  return toMove;
+}
+

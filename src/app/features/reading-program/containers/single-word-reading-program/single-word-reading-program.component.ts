@@ -1,3 +1,4 @@
+import { ReadingCard } from './../../models/interfaces/reading-card';
 import { EditCategoryInfo } from './../../models/interfaces/edit-category-info';
 import { EditCategoryComponent } from './../../components/edit-category/edit-category.component';
 import { Store } from '@ngrx/store';
@@ -108,7 +109,7 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
     }
   }
 
-  public editCategory(category: ReadingCategory<ReadingWord> | null): void {
+  public editCategory(category: ReadingCategory<ReadingCard> | null): void {
     this.childrenOnProgram$?.pipe(take(1)).subscribe((children) => {
       const dialogRef = this.dialog.open(EditCategoryComponent, {
         data: {
@@ -146,5 +147,21 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
     );
 
     console.info('move category');
+  }
+
+  public moveToCurrent(category: ReadingCategory<ReadingCard>): void {
+    this.store.dispatch(actions.moveCategoryToCurrent({programId: this.programId, categoryId: category.id}));
+  }
+
+  public moveToCompleted(category: ReadingCategory<ReadingCard>): void {
+    this.store.dispatch(actions.moveCategoryToCompleted({programId: this.programId, categoryId: category.id}));
+  }
+
+  public remove(category: ReadingCategory<ReadingCard>): void {
+    this.store.dispatch(actions.removeCategory({programId: this.programId, categoryId: category.id}));
+  }
+
+  public viewStats(category: ReadingCategory<ReadingCard>): void {
+    this.store.dispatch(actions.loadCategoryStatistics({programId: this.programId, categoryId: category.id}));
   }
 }

@@ -1,3 +1,4 @@
+import { ReadingCard } from './../../models/interfaces/reading-card';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ReadingCategory } from '../../models/interfaces/reading-category';
@@ -32,9 +33,9 @@ export class CurrentCategoryListComponent implements OnInit {
     }
   }
 
-  public editCategory(category: ReadingCategory<ReadingWord> | null): void {
+  public editCategory(category: ReadingCategory<ReadingCard> | null): void {
     if (category !== null) {
-      this.edit.emit(category);
+      this.edit.emit(category as ReadingCategory<ReadingWord>);
     }
   }
 }
