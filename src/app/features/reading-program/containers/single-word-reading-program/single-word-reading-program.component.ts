@@ -34,6 +34,7 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
   public loadingCompletedError$ = this.store.select(
     fromReadingCategories.errorLoadingCurrentCategories
   );
+  public completedStatus$ = this.store.select(fromReadingCategories.completedCategoriesServerStatus);
 
   public current$ = this.store.select(fromReadingCategories.currentCategories);
   public isLoadingCurrent$ = this.store.select(
@@ -42,6 +43,7 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
   public loadingCurrentError$ = this.store.select(
     fromReadingCategories.errorLoadingCurrentCategories
   );
+  public currentStatus$ = this.store.select(fromReadingCategories.currentCategoriesServerStatus);
 
   public planned$ = this.store.select(
     fromReadingCategories.plannedWordCategories
@@ -52,6 +54,7 @@ export class SingleWordReadingProgramComponent implements OnInit, OnDestroy {
   public loadingPlannedError$ = this.store.select(
     fromReadingCategories.errorLoadingPlannedCategories
   );
+  public plannedStatus$ = this.store.select(fromReadingCategories.plannedCategoriesServerStatus);
 
   public categoryTypes = CategoryListType;
   private unsubscribe$ = new Subject<void>();

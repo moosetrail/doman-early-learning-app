@@ -43,12 +43,12 @@ export const loadCompletedCategoriesFromInApiFailure = createAction(
 
 export const addNewCategoriesToApiSuccess = createAction(
   '[SingleWordsCategoriesEffects] Add new category to API Success',
-  props<{ data: ReadingCategory<ReadingWord> }>()
+  props<{ data: ReadingCategory<ReadingWord>, tempId: string }>()
 );
 
 export const addNewCategoriesToApiFailure = createAction(
   '[SingleWordsCategoriesEffects] Add new category to API Failure',
-  props<{ error: HttpErrorResponse }>()
+  props<{ error: HttpErrorResponse, tempId: string }>()
 );
 
 export const movePlannedCategoryInApiSuccess = createAction(

@@ -89,15 +89,21 @@ export class SingleWordsCategoriesEffects {
   addNewCategory$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromSingleWordReadingProgramComponent.addNewCategory),
-      mergeMap((action) =>
+      concatLatestFrom((action) =>
+        this.store.select(fromReadingCategories.categoryIdFromName(action.name))
+      ),
+      mergeMap(([action, tempId]) =>
         this.api.addCategory(action.programId, action.name, action.words).pipe(
           map((dto) => {
             const category =
               this.mapSingleWordReadingCategoryDtoToReadingCategory(dto);
-            return actions.addNewCategoriesToApiSuccess({ data: category });
+            return actions.addNewCategoriesToApiSuccess({
+              data: category,
+              tempId,
+            });
           }),
           catchError((error) =>
-            of(actions.addNewCategoriesToApiFailure({ error }))
+            of(actions.addNewCategoriesToApiFailure({ error, tempId }))
           )
         )
       )

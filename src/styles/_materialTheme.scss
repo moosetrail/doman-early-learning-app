@@ -22,3 +22,14 @@ $early-learning-app-theme: mat.define-light-theme((
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($early-learning-app-theme);
+
+// PROGRESS SPINNER
+svg .mat-progress-spinner.custom circle, .mat-spinner.custom circle {
+  stroke: inherit;
+}
+
+.mat-progress-spinner, .mat-spinner {
+  &.gray {
+    stroke: lightgray;
+  }
+}

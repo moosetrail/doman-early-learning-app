@@ -10,24 +10,48 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-
-      <button mat-menu-item id="current" *ngIf="showMoveToCurrent" (click)="moveToCurrent.emit()">
+      <button
+        mat-menu-item
+        id="current"
+        *ngIf="showMoveToCurrent"
+        (click)="moveToCurrent.emit()"
+      >
         <mat-icon>today</mat-icon>
         <span>Move to current</span>
       </button>
-      <button mat-menu-item id="planned" *ngIf="showMoveToPlanned" (click)="moveToPlanned.emit()">
+      <button
+        mat-menu-item
+        id="planned"
+        *ngIf="showMoveToPlanned"
+        (click)="moveToPlanned.emit()"
+      >
         <mat-icon>calendar_today</mat-icon>
         <span>Move to planned</span>
       </button>
-      <button mat-menu-item id="completed" *ngIf="showMoveToCompleted" (click)="moveToCompleted.emit()">
+      <button
+        mat-menu-item
+        id="completed"
+        *ngIf="showMoveToCompleted"
+        (click)="moveToCompleted.emit()"
+      >
         <mat-icon>assignment_turned_in</mat-icon>
         <span>Move to completed</span>
       </button>
-      <button mat-menu-item id="remove" *ngIf="showRemove" (click)="remove.emit()">
+      <button
+        mat-menu-item
+        id="remove"
+        *ngIf="showRemove"
+        (click)="remove.emit()"
+      >
         <mat-icon>clear</mat-icon>
         <span>Remove from plan</span>
       </button>
-      <button mat-menu-item id="statistics" *ngIf="showStatistics" (click)="statistics.emit()">
+      <button
+        mat-menu-item
+        id="statistics"
+        *ngIf="showStatistics"
+        (click)="statistics.emit()"
+      >
         <mat-icon>insights</mat-icon>
         <span>View statistics</span>
       </button>
@@ -43,4 +67,9 @@
       <li *ngFor="let pad of numberToPad" class="hidden"></li>
     </ul>
   </mat-card-content>
+  <mat-card-footer *ngIf="processText !== null && processText.length > 0">
+    <div class="loader">
+      <app-loader [size]="30" [color]="'gray'" [toolTip]="processText"></app-loader>
+    </div>
+  </mat-card-footer>
 </mat-card>

@@ -1,3 +1,4 @@
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -10,7 +11,7 @@ describe('LoaderComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LoaderComponent ],
-      imports: [MatProgressSpinnerModule]
+      imports: [MatProgressSpinnerModule, MatTooltipModule]
     })
     .compileComponents();
   });

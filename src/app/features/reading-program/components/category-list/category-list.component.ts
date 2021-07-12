@@ -1,3 +1,4 @@
+import { CategoryServerStatus } from './../../models/category-server-status';
 import { CategoryListType } from './category-list-type';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
@@ -22,6 +23,7 @@ export class CategoryListComponent implements OnInit, OnChanges {
   @Input() categories: ReadingCategory<ReadingCard>[] | null = [];
   @Input() isLoading: boolean | null = false;
   @Input() loadingError: boolean | null = false;
+  @Input() serverStatus: { [key: string]: CategoryServerStatus; } | null = {}
   @Input() categoryType: CategoryListType = CategoryListType.Planned;
   @Output() moveElement = new EventEmitter<
     CdkDragDrop<ReadingCategory<ReadingCard>[] | null>
@@ -47,6 +49,7 @@ export class CategoryListComponent implements OnInit, OnChanges {
   otherDropZones: string[] = [];
 
   public categoryTypes = CategoryListType;
+  public serverStatuses: { [key: string]: CategoryServerStatus; } = {}
 
   constructor() {}
 
@@ -83,7 +86,17 @@ export class CategoryListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(_changes: SimpleChanges): void {
-    this.setViewState();
+    if(_changes.isLoading || _changes.categories || _changes.loadingError){
+      this.setViewState();
+    }
+
+    if(_changes.serverStatus){
+      if(_changes.serverStatus == null){
+        this.serverStatuses = {};
+      } else {
+        this.serverStatuses = _changes.serverStatus.currentValue;
+      }
+    }
   }
 
   private setViewState() {
@@ -111,4 +124,6 @@ export class CategoryListComponent implements OnInit, OnChanges {
       this.moveElement.emit(event);
     }
   }
+
+
 }

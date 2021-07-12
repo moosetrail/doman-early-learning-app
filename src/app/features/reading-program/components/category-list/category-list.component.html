@@ -25,13 +25,15 @@
   >
     <div
       *ngIf="categories !== null && categories.length > 0"
-      fxLayout="row"
+      fxLayout="row wrap"
+      fxLayoutAlign="center center"
       fxLayoutGap="1em"
     >
       <app-reading-category
-        fxFlex
-        *ngFor="let c of categories"
+        fxFlex="18%"
+        *ngFor="let c of categories; let i = index"
         [category]="c"
+        [serverStatus]="serverStatuses[c.id]"
         cdkDrag
         [showMoveToPlanned]="showMoveToPlanned"
         [showMoveToCurrent]="showMoveToCurrent"

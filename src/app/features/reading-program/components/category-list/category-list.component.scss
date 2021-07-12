@@ -1,6 +1,15 @@
-.movable {
-  cursor: move;
+app-reading-category {
+  margin-bottom: 1em;
+
+  &.movable {
+    cursor: move;
+  }
+
+  &:nth-child(6){
+    margin-left: -1em;
+  }
 }
+
 .drop-zone {
 overflow: hidden;
 display: block;

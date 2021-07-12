@@ -1,8 +1,10 @@
+import { ReadingSentence } from './../models/interfaces/reading-sentence';
 import { ReadingCategory } from './../models/interfaces/reading-category';
 import { ReadingWord } from './../models/interfaces/reading-word';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { ReadingProgramState } from '../reading-program.state';
 import * as fromFeature from '../reading-program.state';
+import { CategoryServerStatus } from '../models/category-server-status';
 
 const schoolCourseState = createFeatureSelector<ReadingProgramState>(
   fromFeature.readingProgramStateFeatureKey
@@ -71,3 +73,74 @@ export const errorLoadingCompletedCategories = createSelector(
   categoriesState,
   (state) => state.loadingCompletedError != null
 );
+
+export const categoryServerStatus = (categoryId: string) =>
+  createSelector(categoriesState, (state) => state.categoryStatus[categoryId]);
+
+export const plannedCategoriesServerStatus = createSelector(
+  categoriesState,
+  (state) => statusList(state.plannedCategories, state.categoryStatus)
+);
+
+function statusList(
+  list: ReadingCategory<ReadingWord | ReadingSentence>[],
+  statusList: { [key: string]: CategoryServerStatus }
+): { [key: string]: CategoryServerStatus } {
+  const statuses: { [key: string]: CategoryServerStatus } = {};
+
+  list.forEach((category) => {
+    statuses[category.id] = statusList[category.id];
+  });
+
+  return statuses;
+}
+
+export const currentCategoriesServerStatus = createSelector(
+  categoriesState,
+  (state) => statusList(state.currentCategories, state.categoryStatus)
+);
+
+export const completedCategoriesServerStatus = createSelector(
+  categoriesState,
+  (state) => statusList(state.completedCategories, state.categoryStatus)
+);
+
+export const categoryIdFromName = (categoryName: string) =>
+  createSelector(categoriesState, (state) => {
+    let category = searchForCategoryWithName(
+      categoryName,
+      state.plannedCategories
+    );
+
+    if (category == null) {
+      category = searchForCategoryWithName(
+        categoryName,
+        state.currentCategories
+      );
+    }
+    if (category == null) {
+      category = searchForCategoryWithName(
+        categoryName,
+        state.completedCategories
+      );
+    }
+
+    if (category == null) {
+      return '';
+    }
+
+    return category.id;
+  });
+
+function searchForCategoryWithName(
+  name: string,
+  list: ReadingCategory<ReadingWord | ReadingSentence>[]
+): ReadingCategory<ReadingWord | ReadingSentence> | null {
+  let category = list.find((x) => x.categoryName === name);
+
+  if (category == undefined) {
+    return null;
+  }
+
+  return category;
+}

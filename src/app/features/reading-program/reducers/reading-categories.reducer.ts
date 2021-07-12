@@ -1,3 +1,4 @@
+import { CategoryServerStatus } from './../models/category-server-status';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ReadingSentence } from './../models/interfaces/reading-sentence';
 import { createReducer, on } from '@ngrx/store';
@@ -12,6 +13,8 @@ export interface ReadingCategoriesState {
   programId: string | null;
   completedCategories: ReadingCategory<ReadingWord | ReadingSentence>[];
   currentCategories: ReadingCategory<ReadingWord | ReadingSentence>[];
+  plannedCategories: ReadingCategory<ReadingWord | ReadingSentence>[];
+
   loadingCurrent: boolean;
   loadingCurrentError: HttpErrorResponse | null;
   loadingPlanned: boolean;
@@ -19,7 +22,10 @@ export interface ReadingCategoriesState {
   loadingCompleted: boolean;
   loadingCompletedError: HttpErrorResponse | null;
 
-  plannedCategories: ReadingCategory<ReadingWord | ReadingSentence>[];
+  categoriesWaitingForConfirmation: ReadingCategory<
+    ReadingWord | ReadingSentence
+  >[];
+  categoryStatus:  { [key: string]: CategoryServerStatus }
 }
 
 export const initialState: ReadingCategoriesState = {
@@ -33,6 +39,8 @@ export const initialState: ReadingCategoriesState = {
   loadingPlannedError: null,
   loadingCompleted: false,
   loadingCompletedError: null,
+  categoriesWaitingForConfirmation: [],
+  categoryStatus: {}
 };
 
 export const reducer = createReducer(
@@ -183,6 +191,72 @@ export const reducer = createReducer(
       loadingCompleted: false,
       loadingCompletedError: payload.error,
     })
+  ),
+  on(
+    fromSingleWordReadingProgramComponent.moveCategoryToCurrent,
+    (state, payload) => {
+      let newState = { ...state };
+      let toMove: ReadingCategory<ReadingWord | ReadingSentence> | null = null;
+
+      let index = state.plannedCategories.findIndex(
+        (x) => x.id === payload.categoryId
+      );
+
+      if (index >= 0) {
+        toMove = removeFromList(newState.plannedCategories, index);
+      } else {
+        index = state.completedCategories.findIndex(
+          (x) => x.id === payload.categoryId
+        );
+
+        if (index >= 0) {
+          toMove = removeFromList(newState.completedCategories, index);
+        }
+      }
+
+      if (toMove != null) {
+        newState.currentCategories.push(toMove);
+      }
+
+      return newState;
+    }
+  ),
+  on(fromSingleWordReadingProgramComponent.addNewCategory, (state, payload) => {
+    const newState = { ...state };
+    newState.plannedCategories = [...state.plannedCategories];
+    newState.categoryStatus = {...state.categoryStatus};
+
+    const category = {
+      categoryName: payload.name,
+      id: 'tempId-' + newState.categoriesWaitingForConfirmation.length + 1,
+      cards: payload.words.map((word) => {
+        const card = {
+          text: word,
+          textOnCard: word,
+        } as ReadingWord;
+        return card;
+      }),
+    } as ReadingCategory<ReadingWord>;
+
+    newState.plannedCategories.push(category);
+    newState.categoryStatus[category.id] = CategoryServerStatus.Adding;
+
+    return newState;
+  }),
+  on(
+    fromSingleWordCategoriesEffects.addNewCategoriesToApiSuccess,
+    (state, payload) => {
+      const newState = { ...state };
+      newState.categoryStatus = {...state.categoryStatus};
+      newState.plannedCategories = [...state.plannedCategories];
+
+      const index = newState.plannedCategories.findIndex((x) => x.categoryName == payload.data.categoryName);
+      newState.plannedCategories.splice(index, 1, payload.data);
+      newState.categoryStatus[payload.data.categoryName] = CategoryServerStatus.NotInUse; // Potential memory leak
+      newState.categoryStatus[payload.data.id] = CategoryServerStatus.UpToDate;
+
+      return newState;
+    }
   )
 );
 
